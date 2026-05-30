@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://bible-api.com https://bolls.life; font-src 'self'; img-src 'self' data: blob: https://images.pexels.com; worker-src 'self'; manifest-src 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#c9a84c" />
+  <meta name="description" content="Be Still and Know — KJV Bible study, reading tracker, notes, prayer journal and more." />
+  <meta property="og:title" content="Be Still and Know — KJV Scripture" />
+  <meta property="og:description" content="Read the KJV Bible, track your 30-day plan, journal insights and prayers." />
+  <meta property="og:type" content="website" />
+  <title>Be Still and Know — KJV Scripture</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2306101f' rx='18'/><text y='78' x='50' text-anchor='middle' font-size='72' fill='%23c9a84c'>✝</text></svg>" />
+  <style id="fonts">
+    @font-face { font-family:'Cinzel Decorative'; font-weight:400; font-display:swap; src:url('fonts/cinzel-decorative-400.woff2') format('woff2'); }
+    @font-face { font-family:'Cinzel Decorative'; font-weight:700; font-display:swap; src:url('fonts/cinzel-decorative-700.woff2') format('woff2'); }
+    @font-face { font-family:'Cinzel'; font-weight:400 700; font-display:swap; src:url('fonts/cinzel.woff2') format('woff2'); }
+    @font-face { font-family:'Lora'; font-style:normal; font-weight:400 500; font-display:swap; src:url('fonts/lora.woff2') format('woff2'); }
+    @font-face { font-family:'Lora'; font-style:italic; font-weight:400 500; font-display:swap; src:url('fonts/lora.woff2') format('woff2'); }
+  </style>
+  <style>
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:      #c9a84c;
+      --gold-lt:   #e8c96a;
+      --gold-dk:   #8b6914;
+      --navy:      #06101f;
+      --navy-mid:  #0d1f3a;
+      --navy-lt:   #132740;
+      --parchment: #f0e2c0;
+      --cream:     #fdf6e3;
+      --ticker-h:  36px;
+      --nav-h:     52px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--navy);
+      color: var(--parchment);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Ticker ─────────────────────────────────────────────── */
+    #ticker-wrap {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: linear-gradient(90deg, #06101f 0%, #0d1f3a 50%, #06101f 100%);
+      border-bottom: 1px solid var(--gold-dk);
+      height: var(--ticker-h); overflow: hidden; display: flex; align-items: center;
+    }
+    #ticker-label {
+      flex-shrink: 0; padding: 0 14px;
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.12em;
+      color: var(--gold); border-right: 1px solid var(--gold-dk);
+      height: 100%; display: flex; align-items: center; text-transform: uppercase; white-space: nowrap;
+    }
+    #ticker-track-outer { flex: 1; overflow: hidden; }
+    #ticker-track {
+      display: flex; align-items: center; white-space: nowrap;
+      animation: ticker-scroll 40s linear infinite; will-change: transform;
+    }
+    #ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: inline-flex; align-items: center;
+      font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.05em;
+      color: var(--parchment); padding: 0 22px; cursor: pointer; transition: color 0.2s;
+    }
+    .ticker-item:hover { color: var(--gold-lt); }
+    .ticker-sep { color: var(--gold-dk); padding: 0 4px; }
+    @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── Nav Bar ────────────────────────────────────────────── */
+    #nav-bar {
+      position: fixed; top: var(--ticker-h); left: 0; right: 0; z-index: 199;
+      background: rgba(6,16,40,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.18);
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; padding: 0 16px;
+    }
+    .nav-btn {
+      font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 8px 16px; border-radius: 2px; cursor: pointer;
+      transition: all 0.2s; border: 1px solid rgba(201,168,76,0.25);
+      background: rgba(201,168,76,0.05); color: var(--gold);
+      white-space: nowrap;
+    }
+    .nav-btn:hover { background: rgba(201,168,76,0.14); border-color: var(--gold); color: var(--gold-lt); }
+    .nav-btn.accent {
+      background: linear-gradient(135deg, var(--gold-dk), var(--gold));
+      color: var(--navy); border-color: var(--gold); font-weight: 700;
+    }
+    .nav-btn.accent:hover { filter: brightness(1.12); }
+    .nav-btn-icon { margin-right: 5px; font-style: normal; }
+    @media (max-width: 560px) {
+      .nav-btn { font-size: 0.58rem; padding: 7px 10px; letter-spacing: 0.06em; }
+      .nav-label { display: none; }
+    }
+
+    /* ── Scene / Background ─────────────────────────────────── */
+    #scene {
+      position: relative; width: 100%; min-height: 100vh;
+      background:
+        linear-gradient(180deg,
+          rgba(4,10,22,0.55) 0%,
+          rgba(6,14,28,0.48) 20%,
+          rgba(8,18,36,0.44) 45%,
+          rgba(6,12,26,0.52) 70%,
+          rgba(3,8,18,0.68) 100%
+        ),
+        url('wallpaper.jpg') center center / cover no-repeat fixed;
+      overflow: hidden; display: flex; flex-direction: column; align-items: center;
+      padding-top: calc(var(--ticker-h) + var(--nav-h));
+    }
+    #stars      { display: none; }
+    #moon       { display: none; }
+    #moon-reflection { display: none; }
+    #water {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 28vh;
+      background: linear-gradient(180deg, transparent 0%, rgba(20,12,6,0.18) 60%, rgba(12,8,4,0.38) 100%);
+      z-index: 2; overflow: hidden; pointer-events: none;
+    }
+    .wave { display: none; }
+    @keyframes wave-drift {}
+    .fog-layer { position: absolute; left: -10%; right: -10%; height: 180px; pointer-events: none; z-index: 4; border-radius: 50%; }
+    .fog-1{bottom:10%;background:radial-gradient(ellipse at 50% 100%,rgba(220,200,170,0.06) 0%,transparent 70%);filter:blur(28px)}
+    .fog-2,.fog-3,.fog-4 { display: none; }
+    @keyframes fog-drift {}
+    #jesus-aura { display: none; }
+    #jesus-wrap { display: none; }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    #header { position: relative; z-index: 10; text-align: center; padding: 56px 20px 24px; width: 100%; }
+    .header-ornament { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 12px; }
+    .ornament-line { height: 1px; width: 60px; background: linear-gradient(90deg,transparent,var(--gold),transparent); }
+    #site-title {
+      font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem,5vw,3.2rem);
+      color: var(--gold-lt); letter-spacing: 0.06em;
+      text-shadow: 0 0 40px rgba(201,168,76,0.5), 0 2px 4px rgba(0,0,0,0.8); line-height: 1.2;
+    }
+    #site-subtitle { font-family: 'Cinzel', serif; font-size: clamp(0.62rem,2vw,0.82rem); letter-spacing: 0.3em; color: var(--gold-dk); margin-top: 10px; text-transform: uppercase; }
+
+    /* ── Search ─────────────────────────────────────────────── */
+    #search-section { position: relative; z-index: 10; width: min(600px,92vw); margin: 28px auto 0; }
+    #search-form {
+      display: flex; border: 1px solid var(--gold-dk); border-radius: 4px; overflow: hidden;
+      background: rgba(6,16,40,0.7); backdrop-filter: blur(12px);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    #verse-input {
+      flex: 1; background: transparent; border: none; padding: 14px 18px;
+      font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--cream); outline: none; letter-spacing: 0.05em;
+    }
+    #verse-input::placeholder { color: rgba(201,168,76,0.4); font-style: italic; }
+    #search-btn {
+      background: linear-gradient(135deg, var(--gold-dk), var(--gold));
+      border: none; padding: 14px 22px; color: var(--navy);
+      font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; text-transform: uppercase; transition: filter 0.2s;
+    }
+    #search-btn:hover { filter: brightness(1.15); }
+    #search-hint { text-align: center; margin-top: 8px; font-size: 0.72rem; color: rgba(201,168,76,0.45); font-style: italic; letter-spacing: 0.04em; }
+    #quick-picks {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px;
+      min-height: 32px;
+      transition: opacity 0.5s ease;
+    }
+    #quick-picks.fading { opacity: 0; }
+    .quick-pick {
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: 2px;
+      padding: 5px 12px; font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.08em;
+      color: rgba(201,168,76,0.7); cursor: pointer; transition: all 0.2s;
+    }
+    .quick-pick:hover { background: rgba(201,168,76,0.15); color: var(--gold-lt); border-color: rgba(201,168,76,0.5); }
+
+    /* ── Verse Card ─────────────────────────────────────────── */
+    #verse-card-wrap { position: relative; z-index: 10; width: min(720px,92vw); margin: 32px auto 0; }
+    #verse-card {
+      background: rgba(6,16,40,0.82); backdrop-filter: blur(16px);
+      border: 1px solid rgba(201,168,76,0.25); border-radius: 4px; padding: 36px 40px;
+      display: none; box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(201,168,76,0.1);
+      animation: card-appear 0.5s ease forwards; position: relative;
+    }
+    @keyframes card-appear { from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)} }
+    .card-corner { position: absolute; width: 24px; height: 24px; border-color: var(--gold-dk); border-style: solid; opacity: 0.6; }
+    .card-corner.tl{top:10px;left:10px;border-width:1px 0 0 1px}
+    .card-corner.tr{top:10px;right:10px;border-width:1px 1px 0 0}
+    .card-corner.bl{bottom:10px;left:10px;border-width:0 0 1px 1px}
+    .card-corner.br{bottom:10px;right:10px;border-width:0 1px 1px 0}
+    #verse-ref { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; }
+    #verse-badge { display: inline-block; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); border-radius: 2px; padding: 2px 10px; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--gold-dk); margin-left: 10px; vertical-align: middle; }
+    #verse-divider { height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent); margin: 18px 0; }
+    #verse-text { font-family: 'Lora', serif; font-size: clamp(1rem,2.5vw,1.25rem); line-height: 1.85; color: var(--cream); font-style: italic; }
+    .verse-num { font-style: normal; font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--gold-dk); vertical-align: super; margin-right: 3px; }
+    #meaning-wrap { margin-top: 26px; padding: 20px 24px; background: rgba(201,168,76,0.04); border-left: 2px solid var(--gold-dk); border-radius: 0 2px 2px 0; }
+    #meaning-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    #meaning-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg,rgba(201,168,76,0.3),transparent); }
+    #meaning-text { font-size: 0.95rem; line-height: 1.75; color: rgba(240,226,192,0.85); }
+    #card-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+    .btn {
+      font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 10px 20px; border-radius: 2px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent;
+    }
+    .btn-primary { background: linear-gradient(135deg,var(--gold-dk),var(--gold)); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+    .btn-primary:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--gold); border-color: rgba(201,168,76,0.35); }
+    .btn-outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+    .btn-saved { background: rgba(201,168,76,0.1); color: var(--gold-dk); border-color: rgba(201,168,76,0.2); cursor: default; }
+
+    /* ── Favorites ──────────────────────────────────────────── */
+    #favorites-section { position: relative; z-index: 10; width: min(720px,92vw); margin: 40px auto 0; }
+    #fav-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    #fav-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; white-space: nowrap; }
+    .fav-line { flex: 1; height: 1px; background: linear-gradient(90deg,rgba(201,168,76,0.3),transparent); }
+    #fav-list { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 10px; }
+    #fav-empty { font-size: 0.85rem; color: rgba(201,168,76,0.35); font-style: italic; text-align: center; padding: 20px; }
+    .fav-chip {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 2px; padding: 10px 14px; cursor: pointer; transition: all 0.2s;
+    }
+    .fav-chip:hover { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.4); }
+    .fav-chip-ref { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--gold-lt); }
+    .fav-chip-del { font-size: 0.8rem; color: rgba(201,168,76,0.3); background: none; border: none; cursor: pointer; padding: 2px 4px; transition: all 0.2s; }
+    .fav-chip-del:hover { color: #d44; background: rgba(200,60,60,0.1); }
+
+    /* ── Loading / Error ────────────────────────────────────── */
+    #loading { display: none; text-align: center; padding: 20px; font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.5); text-transform: uppercase; }
+    .loading-dots::after { content: ''; animation: loading-dot 1.4s infinite; }
+    @keyframes loading-dot { 0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'} }
+    #error-msg { display: none; text-align: center; padding: 16px; color: rgba(220,100,100,0.8); font-size: 0.85rem; font-style: italic; }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    #footer {
+      position: relative; z-index: 10; text-align: center; padding: 40px 20px;
+      border-top: 1px solid rgba(201,168,76,0.1); margin-top: 60px;
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.12em; color: rgba(201,168,76,0.3);
+    }
+
+    /* ── Toast ──────────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 28px; right: 24px;
+      background: rgba(6,16,40,0.95); border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 3px; padding: 12px 20px; font-family: 'Cinzel', serif;
+      font-size: 0.72rem; letter-spacing: 0.08em; color: var(--gold-lt);
+      z-index: 9999; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════════════════════════
+       MODALS
+    ═══════════════════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(4,12,30,0.88);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: linear-gradient(160deg, #0a1c38 0%, #06101f 100%);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 6px;
+      width: 100%; max-width: 680px;
+      max-height: 88vh;
+      overflow-y: auto;
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.08);
+      scrollbar-width: thin; scrollbar-color: var(--gold-dk) transparent;
+    }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+    .modal::-webkit-scrollbar { width: 4px; }
+    .modal::-webkit-scrollbar-track { background: transparent; }
+    .modal::-webkit-scrollbar-thumb { background: var(--gold-dk); border-radius: 2px; }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 28px 20px; border-bottom: 1px solid rgba(201,168,76,0.15);
+      position: sticky; top: 0; background: linear-gradient(160deg,#0a1c38,#06101f);
+      z-index: 10;
+    }
+    .modal-title {
+      font-family: 'Cinzel Decorative', serif; font-size: 1.1rem;
+      color: var(--gold-lt); letter-spacing: 0.05em;
+    }
+    .modal-close {
+      background: none; border: none; color: rgba(201,168,76,0.5); font-size: 1.4rem;
+      cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 2px; transition: all 0.2s;
+    }
+    .modal-close:hover { color: var(--gold-lt); background: rgba(201,168,76,0.1); }
+    .modal-body { padding: 28px; }
+    .modal-ornament { height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent); margin-bottom: 24px; }
+
+    /* ── Generate Verse Modal ───────────────────────────────── */
+    #gen-result {
+      text-align: center; padding: 10px 0 24px;
+    }
+    #gen-ref {
+      font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.18em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+    }
+    #gen-text {
+      font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.9;
+      color: var(--cream); font-style: italic; margin-bottom: 20px;
+    }
+    #gen-meaning {
+      font-size: 0.9rem; line-height: 1.75; color: rgba(240,226,192,0.75);
+      padding: 16px 20px; background: rgba(201,168,76,0.04);
+      border-left: 2px solid var(--gold-dk); border-radius: 0 2px 2px 0;
+      text-align: left; margin-bottom: 20px;
+    }
+    #gen-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── 30-Day Tracker Modal ───────────────────────────────── */
+    #tracker-progress-wrap { margin-bottom: 24px; }
+    #tracker-progress-label {
+      display: flex; justify-content: space-between;
+      font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em;
+      color: var(--gold); margin-bottom: 8px;
+    }
+    #tracker-bar-bg { height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    #tracker-bar { height: 100%; background: linear-gradient(90deg,var(--gold-dk),var(--gold-lt)); border-radius: 4px; transition: width 0.5s ease; width: 0%; }
+    #tracker-list { display: flex; flex-direction: column; gap: 6px; }
+    .tracker-day {
+      display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 3px; cursor: pointer; transition: all 0.2s;
+    }
+    .tracker-day:hover { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.25); }
+    .tracker-day.completed { background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.3); }
+    .tracker-check {
+      flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+      border: 1.5px solid rgba(201,168,76,0.35); display: flex; align-items: center; justify-content: center;
+      margin-top: 2px; transition: all 0.2s; font-size: 0.7rem;
+    }
+    .tracker-day.completed .tracker-check { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+    .tracker-day-num { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.12em; color: var(--gold-dk); margin-bottom: 3px; }
+    .tracker-day-title { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.04em; color: var(--cream); margin-bottom: 4px; }
+    .tracker-day.completed .tracker-day-title { color: var(--gold); }
+    .tracker-day-ref { font-size: 0.7rem; color: rgba(201,168,76,0.55); font-style: italic; margin-bottom: 8px; }
+    .tracker-theme { font-size: 0.78rem; color: rgba(240,226,192,0.78); line-height: 1.6; margin-bottom: 8px; }
+    .tracker-focus { font-size: 0.72rem; color: rgba(201,168,76,0.6); font-style: italic; line-height: 1.55; margin-bottom: 8px; }
+    .tracker-concepts { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+    .tracker-tag {
+      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 2px; padding: 2px 8px;
+      font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.06em;
+      color: rgba(201,168,76,0.65);
+    }
+    .tracker-key-verse { font-size: 0.72rem; color: rgba(201,168,76,0.5); border-left: 1px solid rgba(201,168,76,0.2); padding-left: 8px; font-style: italic; line-height: 1.5; }
+    .tracker-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; margin-top: 4px;
+    }
+    .tracker-meta-item {
+      display: flex; flex-direction: column; align-items: center;
+      background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 3px; padding: 5px 10px; min-width: 64px;
+    }
+    .tracker-meta-val {
+      font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--gold-lt);
+      letter-spacing: 0.04em; font-weight: 600;
+    }
+    .tracker-meta-label {
+      font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.12em;
+      color: rgba(201,168,76,0.4); text-transform: uppercase; margin-top: 1px;
+    }
+    .tracker-reset { margin-top: 16px; text-align: center; }
+
+    /* ── Family Tree Modal ──────────────────────────────────── */
+    #tree-modal .modal { max-width: 860px; }
+    #tree-container {
+      overflow-x: auto; padding-bottom: 12px;
+      scrollbar-width: thin; scrollbar-color: var(--gold-dk) transparent;
+    }
+    #tree-container::-webkit-scrollbar { height: 4px; }
+    #tree-container::-webkit-scrollbar-thumb { background: var(--gold-dk); }
+    .tree-era-label {
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em;
+      color: var(--gold-dk); text-transform: uppercase; margin: 22px 0 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .tree-era-label::before, .tree-era-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+    .tree-row { display: flex; align-items: flex-start; justify-content: center; gap: 0; flex-wrap: nowrap; position: relative; padding: 0 10px; }
+    .tree-node-wrap { display: flex; flex-direction: column; align-items: center; position: relative; }
+    .tree-connector-h { height: 2px; background: rgba(201,168,76,0.3); flex: 1; min-width: 20px; margin-top: 24px; }
+    .tree-connector-v {
+      width: 2px; height: 24px; background: linear-gradient(180deg,rgba(201,168,76,0.3),rgba(201,168,76,0.1));
+      margin: 0 auto;
+    }
+    .tree-node {
+      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 4px; padding: 10px 14px; text-align: center;
+      min-width: 110px; cursor: pointer; transition: all 0.22s; position: relative;
+    }
+    .tree-node:hover { background: rgba(201,168,76,0.16); border-color: var(--gold); transform: translateY(-2px); }
+    .tree-node.highlight { border-color: var(--gold-lt); background: rgba(201,168,76,0.18); box-shadow: 0 0 18px rgba(201,168,76,0.25); }
+    .tree-node-name { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.08em; color: var(--gold-lt); margin-bottom: 2px; }
+    .tree-node-sub { font-size: 0.62rem; color: rgba(201,168,76,0.55); font-style: italic; }
+    .tree-node-ref { font-size: 0.58rem; color: rgba(201,168,76,0.35); margin-top: 3px; }
+    .tree-couple { display: flex; align-items: center; gap: 0; }
+    .tree-couple-sep { font-family: 'Cinzel', serif; font-size: 0.7rem; color: rgba(201,168,76,0.3); padding: 0 6px; margin-top: -10px; }
+    .tree-children-row { display: flex; align-items: flex-start; justify-content: center; gap: 8px; padding-top: 0; }
+    .tree-branch {
+      display: flex; flex-direction: column; align-items: center;
+    }
+    /* Node tooltip */
+    #tree-tooltip {
+      position: fixed; z-index: 600;
+      background: rgba(6,16,40,0.97); border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 4px; padding: 14px 18px; max-width: 280px;
+      pointer-events: none; opacity: 0; transition: opacity 0.2s;
+      font-size: 0.82rem; line-height: 1.65; color: var(--parchment);
+    }
+    #tree-tooltip.show { opacity: 1; }
+    #tree-tooltip-name { font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--gold-lt); margin-bottom: 6px; }
+
+    /* ── Subscribe Modal ────────────────────────────────────── */
+
+    @media (max-width: 560px) {
+      #verse-card { padding: 24px 20px; }
+      .modal-body { padding: 20px; }
+      .sub-row { flex-direction: column; }
+      #card-actions { flex-direction: column; }
+      .tree-node { min-width: 88px; }
+    }
+
+    /* ── Bible Reader ────────────────────────────────────────── */
+    #reader-modal .modal { max-width: min(98vw, 1280px); max-height: 92vh; }
+
+    /* ── Creation Timeline ───────────────────────────────────── */
+    #timeline-modal .modal { max-width: 860px; }
+    .timeline-wrap { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .timeline-wrap::before {
+      content: ''; position: absolute; left: 38px; top: 0; bottom: 0; width: 2px;
+      background: linear-gradient(180deg, rgba(201,168,76,0.6) 0%, rgba(201,168,76,0.1) 100%);
+    }
+    .timeline-day {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 18px 0; position: relative;
+    }
+    .timeline-day-badge {
+      flex-shrink: 0; width: 78px; height: 78px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-dk), rgba(201,168,76,0.3));
+      border: 2px solid var(--gold);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 1; box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    }
+    .timeline-day-num {
+      font-family: 'Cinzel Decorative', serif; font-size: 0.6rem;
+      letter-spacing: 0.1em; color: var(--gold-dk); text-transform: uppercase;
+    }
+    .timeline-day-n {
+      font-family: 'Cinzel Decorative', serif; font-size: 1.5rem;
+      color: var(--gold-lt); line-height: 1;
+    }
+    .timeline-day-icon { font-size: 1.1rem; margin-top: 1px; }
+    .timeline-day-content { flex: 1; padding-top: 8px; }
+    .timeline-day-title {
+      font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 0.1em;
+      color: var(--gold-lt); margin-bottom: 6px;
+    }
+    .timeline-day-verse {
+      font-family: 'Lora', serif; font-size: 0.88rem; font-style: italic;
+      color: rgba(240,226,192,0.8); line-height: 1.7; margin-bottom: 8px;
+      padding: 10px 14px; background: rgba(201,168,76,0.04);
+      border-left: 2px solid rgba(201,168,76,0.3); border-radius: 0 2px 2px 0;
+    }
+    .timeline-day-ref {
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.12em;
+      color: var(--gold-dk);
+    }
+    .timeline-day-desc {
+      font-size: 0.82rem; color: rgba(240,226,192,0.65); line-height: 1.65;
+      margin-top: 6px;
+    }
+    .timeline-day-7 .timeline-day-badge {
+      background: linear-gradient(135deg, rgba(201,168,76,0.5), rgba(201,168,76,0.15));
+      box-shadow: 0 0 30px rgba(201,168,76,0.35);
+    }
+    #reader-nav {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    #reader-book-select, #reader-chapter-select {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2px; padding: 8px 10px;
+      font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.06em;
+      color: var(--cream); outline: none; cursor: pointer;
+    }
+    #reader-book-select option, #reader-chapter-select option { background: #0d1f3a; color: var(--cream); }
+    #reader-book-select:focus, #reader-chapter-select:focus { border-color: var(--gold); }
+    .reader-nav-btn {
+      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 2px; padding: 8px 14px;
+      font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.08em;
+      color: var(--gold); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .reader-nav-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .reader-nav-btn:disabled { opacity: 0.3; cursor: default; }
+    #reader-chapter-label {
+      font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.1em;
+      color: var(--gold-dk); white-space: nowrap; padding: 0 4px;
+    }
+    /* Audio bar */
+    #reader-audio-bar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 3px; padding: 10px 14px; margin-bottom: 18px;
+    }
+    #reader-audio-play {
+      background: linear-gradient(135deg, var(--gold-dk), var(--gold));
+      border: none; border-radius: 2px; padding: 8px 18px;
+      font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; color: var(--navy); cursor: pointer;
+      transition: filter 0.2s; white-space: nowrap;
+    }
+    #reader-audio-play:hover { filter: brightness(1.12); }
+    .speed-btn {
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 2px; padding: 5px 10px;
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.08em;
+      color: rgba(201,168,76,0.6); cursor: pointer; transition: all 0.2s;
+    }
+    .speed-btn:hover { background: rgba(201,168,76,0.14); color: var(--gold-lt); }
+    .speed-btn.active { background: rgba(201,168,76,0.18); border-color: var(--gold); color: var(--gold-lt); }
+    #reader-audio-status {
+      font-size: 0.68rem; color: rgba(201,168,76,0.5); font-style: italic;
+      flex: 1; text-align: right; min-width: 80px;
+    }
+    /* Verse rows */
+    #reader-verses { display: flex; flex-direction: column; gap: 2px; }
+    .reader-verse {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px; border-radius: 3px;
+      border: 1px solid transparent;
+      transition: all 0.18s; cursor: pointer;
+    }
+    .reader-verse:hover { background: rgba(201,168,76,0.05); border-color: rgba(201,168,76,0.12); }
+    .reader-verse.active {
+      background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3);
+    }
+    .reader-verse.speaking {
+      background: rgba(201,168,76,0.15); border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 0 12px rgba(201,168,76,0.1);
+    }
+    .rv-num {
+      flex-shrink: 0; font-family: 'Cinzel', serif; font-size: 0.6rem;
+      color: var(--gold-dk); min-width: 22px; padding-top: 3px;
+      letter-spacing: 0.04em;
+    }
+    .rv-text {
+      flex: 1; font-family: 'Lora', serif; font-size: 0.95rem;
+      line-height: 1.75; color: var(--cream);
+    }
+    .rv-star {
+      flex-shrink: 0; background: none; border: none;
+      font-size: 1rem; cursor: pointer; padding: 2px 4px;
+      color: rgba(201,168,76,0.25); transition: all 0.2s;
+      line-height: 1;
+    }
+    .rv-star:hover { color: var(--gold-lt); transform: scale(1.2); }
+    .rv-star.starred { color: var(--gold); }
+    .rv-pipe { color: rgba(201,168,76,0.25); font-size: 0.75rem; margin: 0 2px; flex-shrink:0; align-self:center; }
+    .rv-day-badge {
+      flex-shrink:0; font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.06em;
+      padding:2px 7px; border-radius:2px; cursor:pointer; white-space:nowrap;
+      border:1px solid; align-self:center; transition:opacity 0.2s;
+    }
+    .rv-day-badge:hover { opacity:0.75; }
+    .rv-day-ot  { color:#c9a84c; border-color:rgba(201,168,76,0.4); background:rgba(201,168,76,0.08); }
+    .rv-day-gsp { color:#7eb8e8; border-color:rgba(100,160,220,0.4); background:rgba(100,160,220,0.08); }
+    .rv-day-act { color:#7ed4c8; border-color:rgba(100,200,190,0.4); background:rgba(100,200,190,0.08); }
+    .rv-day-epi { color:#c890e8; border-color:rgba(180,130,220,0.4); background:rgba(180,130,220,0.08); }
+    .rv-day-rev { color:#e88080; border-color:rgba(220,100,100,0.4); background:rgba(220,100,100,0.08); }
+    /* Reader Bible-progress bar */
+    #reader-bible-progress { margin:0 0 14px; }
+    #rbp-bar-bg { height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; }
+    #rbp-bar { height:100%; background:linear-gradient(90deg,var(--gold-dk),var(--gold-lt)); border-radius:2px; transition:width 0.5s; }
+    #rbp-label { display:flex; justify-content:space-between; font-family:'Cinzel',serif; font-size:0.58rem; color:rgba(201,168,76,0.45); letter-spacing:0.07em; margin-top:5px; }
+    #rbp-stats { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .rbp-stat { background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.12); border-radius:3px; padding:5px 12px; font-family:'Cinzel',serif; font-size:0.62rem; color:rgba(201,168,76,0.65); white-space:nowrap; }
+    .rbp-stat span { color:var(--gold-lt); font-size:0.75rem; }
+    /* Tracker get-started button */
+    .tracker-start-btn {
+      display:inline-flex; align-items:center; gap:5px;
+      background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+      border:none; border-radius:2px; padding:7px 16px; margin-top:10px;
+      font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em;
+      color:var(--navy); cursor:pointer; font-weight:700; transition:filter 0.2s;
+    }
+    .tracker-start-btn:hover { filter:brightness(1.12); }
+    /* Tracker cumulative stats */
+    #tracker-cumulative { padding:20px 0 4px; margin-top:18px; border-top:1px solid rgba(201,168,76,0.12); }
+    .tracker-cum-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.18em; color:var(--gold-dk); text-transform:uppercase; margin-bottom:12px; }
+    .tracker-cum-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .tracker-cum-box { flex:1; min-width:80px; text-align:center; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.12); border-radius:3px; padding:10px 8px; }
+    .tracker-cum-val { font-family:'Cinzel Decorative',serif; font-size:1.05rem; color:var(--gold-lt); }
+    .tracker-cum-lbl { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.12em; color:rgba(201,168,76,0.4); text-transform:uppercase; margin-top:2px; }
+    /* Verse controls */
+    #reader-verse-controls {
+      display: flex; align-items: center; gap: 8px; justify-content: center;
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    #reader-loading {
+      text-align: center; padding: 40px 20px;
+      font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.5); text-transform: uppercase; display: none;
+    }
+    #reader-error {
+      text-align: center; padding: 20px;
+      color: rgba(220,100,100,0.8); font-size: 0.85rem; font-style: italic; display: none;
+    }
+
+    /* ── Person Popup Modal ───────────────────────────────────── */
+    #person-modal .modal { max-width: 480px; }
+    #person-modal-name {
+      font-family: 'Cinzel Decorative', serif; font-size: 1.15rem;
+      color: var(--gold-lt); margin-bottom: 6px;
+    }
+    #person-modal-ref-label {
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.18em;
+      color: var(--gold-dk); text-transform: uppercase; margin-bottom: 14px;
+    }
+    #person-modal-verse {
+      font-family: 'Lora', serif; font-size: 1rem; line-height: 1.8;
+      font-style: italic; color: var(--cream);
+      padding: 16px 18px; background: rgba(201,168,76,0.05);
+      border-left: 2px solid var(--gold-dk); border-radius: 0 2px 2px 0;
+      margin-bottom: 18px; min-height: 60px;
+    }
+    #person-modal-desc {
+      font-size: 0.9rem; line-height: 1.75; color: rgba(240,226,192,0.8);
+    }
+    #person-modal-loading {
+      font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em;
+      color: rgba(201,168,76,0.45); text-align: center; padding: 12px;
+    }/* ── Mobile hamburger ───────────────────────────────────── */
+    #hamburger { display:none; background:none; border:1px solid rgba(201,168,76,0.3); border-radius:3px; padding:6px 10px; cursor:pointer; color:var(--gold); font-size:1.1rem; }
+    @media(max-width:700px){
+      #hamburger { display:flex; align-items:center; }
+      #nav-links { display:none; flex-direction:column; position:fixed; top:calc(var(--ticker-h)+var(--nav-h)); left:0; right:0; background:rgba(6,16,40,0.98); border-bottom:1px solid rgba(201,168,76,0.2); padding:8px; z-index:198; gap:6px; }
+      #nav-links.open { display:flex; }
+      #nav-links .nav-btn { width:100%; text-align:left; }
+    }
+    @media(min-width:701px){ #nav-links { display:flex !important; gap:6px; } }
+
+    /* ── Verse of the Day ───────────────────────────────────── */
+    #votd-card {
+      position:relative; z-index:10; width:min(660px,92vw); margin:22px auto 0;
+      background:rgba(6,16,40,0.72); backdrop-filter:blur(12px);
+      border:1px solid rgba(201,168,76,0.22); border-radius:4px; padding:18px 24px;
+      text-align:center;
+    }
+    #votd-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.22em; color:var(--gold-dk); text-transform:uppercase; margin-bottom:8px; }
+    #votd-text { font-family:'Lora',serif; font-size:1rem; font-style:italic; color:var(--cream); line-height:1.75; margin-bottom:8px; }
+    #votd-ref { font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.12em; color:var(--gold); cursor:pointer; transition:color 0.2s; }
+    #votd-ref:hover { color:var(--gold-lt); }
+
+    /* ── Streak / Recently Viewed bar ──────────────────────── */
+    #status-bar {
+      position:relative; z-index:10; width:min(660px,92vw); margin:10px auto 0;
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+    }
+    .status-chip {
+      background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.18);
+      border-radius:20px; padding:5px 14px;
+      font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.07em;
+      color:rgba(201,168,76,0.7); cursor:pointer; transition:all 0.2s; white-space:nowrap;
+    }
+    .status-chip:hover { background:rgba(201,168,76,0.14); color:var(--gold-lt); }
+    .status-chip.streak { color:#ff9040; border-color:rgba(255,144,64,0.3); background:rgba(255,144,64,0.07); }
+
+    /* ── Reader enhancements ────────────────────────────────── */
+    #reader-toolbar {
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      margin-bottom:10px; padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.1);
+    }
+    .rtb-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.12em; color:var(--gold-dk); white-space:nowrap; }
+    .font-btn { background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.2); border-radius:2px; padding:4px 10px; font-family:'Cinzel',serif; font-size:0.7rem; color:var(--gold); cursor:pointer; transition:all 0.2s; }
+    .font-btn:hover { background:rgba(201,168,76,0.14); }
+    #font-size-display { font-family:'Cinzel',serif; font-size:0.65rem; color:var(--gold-dk); min-width:32px; text-align:center; }
+    #bookmark-btn { background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.2); border-radius:2px; padding:4px 12px; font-family:'Cinzel',serif; font-size:0.7rem; color:var(--gold); cursor:pointer; transition:all 0.2s; }
+    #bookmark-btn:hover { background:rgba(201,168,76,0.14); }
+    #bookmark-btn.bookmarked { background:rgba(201,168,76,0.18); border-color:var(--gold); color:var(--gold-lt); }
+    #compare-btn { background:rgba(100,160,220,0.08); border:1px solid rgba(100,160,220,0.25); border-radius:2px; padding:4px 12px; font-family:'Cinzel',serif; font-size:0.7rem; color:#7eb8e8; cursor:pointer; transition:all 0.2s; }
+    #compare-btn:hover { background:rgba(100,160,220,0.15); }
+
+    /* Highlight colors */
+    .rv-highlight-wrap { position:relative; flex-shrink:0; align-self:center; }
+    .rv-highlight-btn { background:none; border:none; font-size:0.8rem; cursor:pointer; padding:2px 3px; color:rgba(201,168,76,0.2); transition:all 0.2s; line-height:1; }
+    .rv-highlight-btn:hover { color:var(--gold); transform:scale(1.2); }
+    .rv-highlight-btn.highlighted { color:var(--gold); }
+    .highlight-picker { display:none; position:absolute; right:0; top:22px; background:rgba(6,16,40,0.96); border:1px solid rgba(201,168,76,0.25); border-radius:4px; padding:6px 8px; gap:6px; z-index:50; flex-wrap:nowrap; }
+    .highlight-picker.open { display:flex; }
+    .hc { width:18px; height:18px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform 0.15s; }
+    .hc:hover { transform:scale(1.25); border-color:rgba(255,255,255,0.5); }
+    .reader-verse.hl-yellow { background:rgba(255,230,100,0.12) !important; border-color:rgba(255,230,100,0.3) !important; }
+    .reader-verse.hl-blue   { background:rgba(100,160,255,0.10) !important; border-color:rgba(100,160,255,0.3) !important; }
+    .reader-verse.hl-green  { background:rgba(100,200,120,0.10) !important; border-color:rgba(100,200,120,0.3) !important; }
+    .reader-verse.hl-pink   { background:rgba(255,120,160,0.10) !important; border-color:rgba(255,120,160,0.3) !important; }
+    .reader-verse.hl-purple { background:rgba(180,100,230,0.10) !important; border-color:rgba(180,100,230,0.3) !important; }
+
+    /* Cross-references panel */
+    #xref-panel { margin-top:14px; padding-top:14px; border-top:1px solid rgba(201,168,76,0.1); display:none; }
+    #xref-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.15em; color:var(--gold-dk); text-transform:uppercase; margin-bottom:10px; }
+    #xref-list { display:flex; flex-wrap:wrap; gap:7px; }
+    .xref-chip { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.07em; color:var(--gold); background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.2); border-radius:2px; padding:4px 10px; cursor:pointer; transition:all 0.2s; }
+    .xref-chip:hover { background:rgba(201,168,76,0.14); border-color:var(--gold); }
+
+    /* Compare translations modal */
+    #compare-modal .modal { max-width:min(96vw,860px); }
+    .compare-col { flex:1; min-width:200px; }
+    .compare-trans-label { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.12em; color:var(--gold-dk); text-transform:uppercase; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+    .compare-trans-label::after { content:''; flex:1; height:1px; background:rgba(201,168,76,0.15); }
+    .compare-text { font-family:'Lora',serif; font-size:0.92rem; font-style:italic; color:var(--cream); line-height:1.8; padding:14px 16px; background:rgba(201,168,76,0.04); border-left:2px solid rgba(201,168,76,0.2); border-radius:0 2px 2px 0; min-height:80px; }
+    .compare-loading { color:rgba(201,168,76,0.4); font-style:italic; font-size:0.8rem; }
+
+    /* Word Search modal */
+    #wordsearch-modal .modal { max-width:min(96vw,840px); }
+    #ws-input-row { display:flex; gap:8px; margin-bottom:18px; }
+    #ws-input { flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:12px 16px; font-family:'Cinzel',serif; font-size:0.9rem; color:var(--cream); outline:none; letter-spacing:0.05em; }
+    #ws-input::placeholder { color:rgba(201,168,76,0.35); font-style:italic; }
+    #ws-input:focus { border-color:var(--gold); }
+    #ws-btn { background:linear-gradient(135deg,var(--gold-dk),var(--gold)); border:none; border-radius:2px; padding:12px 22px; font-family:'Cinzel',serif; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; color:var(--navy); cursor:pointer; transition:filter 0.2s; }
+    #ws-btn:hover { filter:brightness(1.12); }
+    #ws-results { display:flex; flex-direction:column; gap:6px; max-height:50vh; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--gold-dk) transparent; }
+    .ws-result { display:flex; gap:12px; align-items:flex-start; padding:10px 12px; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.1); border-radius:3px; cursor:pointer; transition:all 0.2s; }
+    .ws-result:hover { background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); }
+    .ws-ref { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.08em; color:var(--gold); white-space:nowrap; min-width:110px; padding-top:2px; }
+    .ws-text { font-size:0.85rem; color:rgba(240,226,192,0.8); line-height:1.6; }
+    .ws-text mark { background:rgba(201,168,76,0.25); color:var(--gold-lt); border-radius:2px; padding:0 2px; font-style:normal; }
+    #ws-status { font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.1em; color:rgba(201,168,76,0.45); text-align:center; padding:12px; }
+    #ws-count { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--gold-dk); margin-bottom:12px; }
+
+    /* Prayer Journal modal */
+    #prayer-modal .modal { max-width:min(96vw,820px); }
+    .prayer-card { background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.15); border-radius:4px; padding:14px 16px; margin-bottom:8px; cursor:pointer; transition:all 0.2s; }
+    .prayer-card:hover { background:rgba(201,168,76,0.09); border-color:rgba(201,168,76,0.35); }
+    .prayer-card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:6px; flex-wrap:wrap; }
+    .prayer-card-title { font-family:'Cinzel',serif; font-size:0.78rem; letter-spacing:0.06em; color:var(--gold-lt); }
+    .prayer-status-badge { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.1em; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+    .prayer-status-badge.praying { background:rgba(100,160,220,0.12); border:1px solid rgba(100,160,220,0.3); color:#7eb8e8; }
+    .prayer-status-badge.answered { background:rgba(100,200,120,0.12); border:1px solid rgba(100,200,120,0.3); color:#8ed49a; }
+    .prayer-card-text { font-size:0.83rem; color:rgba(240,226,192,0.72); line-height:1.6; margin-bottom:6px; white-space:pre-wrap; }
+    .prayer-card-footer { display:flex; justify-content:space-between; align-items:center; }
+    .prayer-card-date { font-family:'Cinzel',serif; font-size:0.58rem; color:rgba(201,168,76,0.3); letter-spacing:0.08em; }
+    #prayer-title-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:10px 14px; font-family:'Cinzel',serif; font-size:0.85rem; color:var(--cream); outline:none; margin-bottom:10px; transition:border-color 0.2s; }
+    #prayer-title-input:focus { border-color:var(--gold); }
+    #prayer-text-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:12px 14px; font-family:'Lora',serif; font-size:0.9rem; color:var(--cream); outline:none; resize:vertical; min-height:120px; line-height:1.7; margin-bottom:10px; transition:border-color 0.2s; }
+    #prayer-text-input:focus { border-color:var(--gold); }
+    #prayer-status-select { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:8px 12px; font-family:'Cinzel',serif; font-size:0.72rem; color:var(--cream); outline:none; cursor:pointer; margin-bottom:14px; }
+    #prayer-status-select option { background:#0d1f3a; }
+
+    /* Biblical Timeline */
+    #bibtl-modal .modal { max-width:min(96vw,900px); }
+    .bibtl-era { margin-bottom:0; }
+    .bibtl-item { display:flex; gap:16px; align-items:flex-start; padding:12px 0; border-left:2px solid rgba(201,168,76,0.2); margin-left:20px; padding-left:20px; position:relative; }
+    .bibtl-item::before { content:''; position:absolute; left:-6px; top:16px; width:10px; height:10px; border-radius:50%; background:rgba(201,168,76,0.4); border:2px solid var(--gold-dk); }
+    .bibtl-item.nt::before { background:rgba(100,160,220,0.5); border-color:#7eb8e8; }
+    .bibtl-item.nt { border-left-color:rgba(100,160,220,0.25); }
+    .bibtl-date { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.06em; color:var(--gold-dk); white-space:nowrap; min-width:90px; padding-top:2px; }
+    .bibtl-item.nt .bibtl-date { color:#7eb8e8; }
+    .bibtl-event { font-family:'Cinzel',serif; font-size:0.78rem; letter-spacing:0.04em; color:var(--gold-lt); margin-bottom:3px; }
+    .bibtl-desc { font-size:0.78rem; color:rgba(240,226,192,0.65); line-height:1.55; }
+    .bibtl-ref { font-size:0.65rem; color:rgba(201,168,76,0.4); font-style:italic; margin-top:2px; cursor:pointer; }
+    .bibtl-ref:hover { color:var(--gold); }
+    .bibtl-tabs { display:flex; gap:8px; margin-bottom:20px; }
+    .bibtl-tab { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.1em; padding:8px 16px; border-radius:2px; cursor:pointer; transition:all 0.2s; border:1px solid rgba(201,168,76,0.2); color:rgba(201,168,76,0.6); background:transparent; }
+    .bibtl-tab.active { background:rgba(201,168,76,0.12); border-color:var(--gold); color:var(--gold-lt); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ TICKER ════════════════════════════════════════════════ -->
+<div id="ticker-wrap">
+  <div id="ticker-label">✦ Saved</div>
+  <div id="ticker-track-outer">
+    <div id="ticker-track">
+      <span style="font-family:'Cinzel',serif;font-size:0.68rem;color:rgba(201,168,76,0.35);padding:0 20px;font-style:italic;">Save a verse below to see it scroll here ✦</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAV BAR ══════════════════════════════════════════════ -->
+<div id="nav-bar">
+  <button id="hamburger" onclick="toggleHamburger()">☰</button>
+  <div id="nav-links">
+    <button class="nav-btn accent" onclick="openModal('reader-modal');closeHamburger()">
+      <span class="nav-btn-icon">📜</span><span class="nav-label">Read Bible</span>
+    </button>
+    <button class="nav-btn" onclick="openModal('tracker-modal');closeHamburger()">
+      <span class="nav-btn-icon">📖</span><span class="nav-label">30-Day Plan</span>
+    </button>
+    <button class="nav-btn" onclick="openModal('bibtl-modal');closeHamburger()">
+      <span class="nav-btn-icon">🕊</span><span class="nav-label">Timeline</span>
+    </button>
+    <button class="nav-btn" onclick="openModal('tree-modal');closeHamburger()">
+      <span class="nav-btn-icon">🌿</span><span class="nav-label">Family Tree</span>
+    </button>
+    <button class="nav-btn" onclick="openModal('wordsearch-modal');closeHamburger()">
+      <span class="nav-btn-icon">🔍</span><span class="nav-label">Word Search</span>
+    </button>
+    <button class="nav-btn" onclick="openModal('notes-modal');closeHamburger()" style="border-color:rgba(100,200,180,0.3);color:#7ed4c8;">
+      <span class="nav-btn-icon">📝</span><span class="nav-label">Notes</span>
+    </button>
+    <button class="nav-btn" onclick="openModal('prayer-modal');closeHamburger()" style="border-color:rgba(180,130,220,0.3);color:#c890e8;">
+      <span class="nav-btn-icon">🙏</span><span class="nav-label">Prayer</span>
+    </button>
+  
+  </div>
+</div>
+
+<!-- ═══ SCENE ════════════════════════════════════════════════ -->
+<div id="scene">
+  <div id="stars"></div>
+  <div id="moon"></div>
+  <div id="moon-reflection"></div>
+  <div id="jesus-aura"></div>
+  <div id="jesus-wrap">
+    <svg viewBox="0 0 90 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <ellipse cx="45" cy="165" rx="26" ry="8" fill="rgba(201,168,76,0.06)"/>
+      <path d="M26 100 Q20 140 18 180 Q30 175 45 177 Q60 175 72 180 Q70 140 64 100 Z" fill="rgba(20,40,80,0.85)" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+      <path d="M40 100 Q38 130 36 165" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+      <path d="M50 100 Q52 130 54 165" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+      <path d="M30 98 Q16 125 14 170 Q22 168 26 160 Q28 140 30 120 Z" fill="rgba(10,24,55,0.9)" stroke="rgba(201,168,76,0.15)" stroke-width="0.5"/>
+      <path d="M60 98 Q74 125 76 170 Q68 168 64 160 Q62 140 60 120 Z" fill="rgba(10,24,55,0.9)" stroke="rgba(201,168,76,0.15)" stroke-width="0.5"/>
+      <path d="M62 115 Q74 112 80 118 Q76 122 68 120 Q65 118 62 118 Z" fill="rgba(180,140,100,0.7)"/>
+      <path d="M28 118 Q18 116 13 122 Q17 126 24 123 Q27 121 28 121 Z" fill="rgba(180,140,100,0.7)"/>
+      <rect x="41" y="75" width="8" height="16" rx="3" fill="rgba(190,155,110,0.8)"/>
+      <ellipse cx="45" cy="62" rx="14" ry="16" fill="rgba(190,155,110,0.85)" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+      <path d="M31 58 Q31 42 45 40 Q59 42 59 58 Q57 52 53 64 Q49 70 45 72 Q41 70 37 64 Q33 52 31 58 Z" fill="rgba(50,30,15,0.9)"/>
+      <path d="M37 68 Q35 76 37 82 Q41 86 45 87 Q49 86 53 82 Q55 76 53 68 Q49 73 45 73 Q41 73 37 68 Z" fill="rgba(50,30,15,0.85)"/>
+      <circle cx="45" cy="55" r="22" fill="none" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
+      <circle cx="45" cy="55" r="24" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+      <circle cx="45" cy="55" r="18" fill="rgba(201,168,76,0.04)"/>
+      <ellipse cx="40" cy="177" rx="7" ry="3" fill="rgba(180,140,100,0.5)"/>
+      <ellipse cx="52" cy="177" rx="7" ry="3" fill="rgba(180,140,100,0.5)"/>
+      <ellipse cx="45" cy="182" rx="22" ry="4" fill="none" stroke="rgba(130,180,220,0.2)" stroke-width="1"/>
+      <ellipse cx="45" cy="184" rx="30" ry="5" fill="none" stroke="rgba(130,180,220,0.12)" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <div id="water"><div class="wave wave-1"></div><div class="wave wave-2"></div><div class="wave wave-3"></div><div class="wave wave-4"></div></div>
+  <div class="fog-layer fog-1"></div><div class="fog-layer fog-2"></div><div class="fog-layer fog-3"></div><div class="fog-layer fog-4"></div>
+
+  <!-- Header -->
+  <div id="header">
+    <div class="header-ornament"><div class="ornament-line"></div><span style="color:var(--gold)">✝</span><div class="ornament-line"></div></div>
+    <h1 id="site-title">Be Still and Know</h1>
+    <p id="site-subtitle">Psalm 46:10 &nbsp;·&nbsp; King James Bible &nbsp;·&nbsp; Scripture &amp; Reflection</p>
+  </div>
+
+  <!-- Verse of the Day -->
+  <div id="votd-card">
+    <div id="votd-label">✦ Verse of the Day</div>
+    <div id="votd-text">Loading today's verse…</div>
+    <div id="votd-ref" onclick="votdOpen()"></div>
+  </div>
+  <!-- Streak + Recently Viewed -->
+  <div id="status-bar">
+    <span class="status-chip streak" id="streak-chip" style="display:none"></span>
+    <span class="status-chip" id="recent-chip" style="display:none" onclick="recentOpen()"></span>
+  </div>
+  <!-- Search -->
+  <div id="search-section">
+    <form id="search-form" onsubmit="searchToReader(event)">
+      <input id="verse-input" type="text" placeholder="e.g. John 3:16 · Matthew 5:3-12 · Psalm 23" autocomplete="off" spellcheck="false"/>
+      <button id="search-btn" type="submit">Seek</button>
+    </form>
+    <p id="search-hint">Enter any book, chapter, and verse from the KJV Bible</p>
+    <div id="quick-picks"></div>
+  </div>
+
+
+
+  <!-- Favorites -->
+  <div id="favorites-section">
+    <div id="fav-header"><div id="fav-title">✦ My Saved Verses</div><div class="fav-line"></div></div>
+    <div id="fav-list"><div id="fav-empty">Your saved verses will appear here</div></div>
+  </div>
+
+  <div id="footer">✝ &nbsp; All Scripture from the King James Bible &nbsp;·&nbsp; Be Still and Know &nbsp;·&nbsp; Built for the Glory of God &nbsp; ✝
+    <div style="margin-top:10px;font-size:0.6rem;color:rgba(201,168,76,0.3);letter-spacing:0.06em;line-height:1.7;max-width:700px;margin-left:auto;margin-right:auto;">
+      Be Still and Know is a personal devotional tool. Scripture is from the public domain King James Bible. Reflections are for personal study only and do not constitute spiritual, legal, or medical advice.
+    </div>
+    <div style="margin-top:6px;font-size:0.55rem;color:rgba(201,168,76,0.2);letter-spacing:0.08em;">Background photo by <a href="https://www.pexels.com/photo/empty-brown-canvas-235985/" target="_blank" rel="noopener noreferrer" style="color:rgba(201,168,76,0.25);text-decoration:none;">Pixabay via Pexels</a> &nbsp;·&nbsp; Fonts: SIL Open Font License &nbsp;·&nbsp; KJV: Public Domain</div>
+    <div style="margin-top:8px;font-size:0.55rem;color:rgba(201,168,76,0.25);letter-spacing:0.08em;">Background photo by <a href="https://www.pexels.com/photo/empty-brown-canvas-235985/" target="_blank" style="color:rgba(201,168,76,0.35);text-decoration:none;">Pixabay via Pexels</a> &nbsp;·&nbsp; Free to use (Pexels License, no attribution required)</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: GENERATE VERSE
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="gen-modal" onclick="overlayClose(event,'gen-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✦ Generate a Verse</div>
+      <button class="modal-close" onclick="closeModal('gen-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <div style="text-align:center;margin-bottom:24px;">
+        <p style="font-size:0.88rem;color:rgba(240,226,192,0.7);line-height:1.65;margin-bottom:20px;">Let the Spirit guide which verse finds you today.</p>
+        <button class="btn btn-primary" onclick="generateVerse()" style="font-size:0.8rem;padding:12px 32px;">✦ Reveal a Verse</button>
+      </div>
+      <div id="gen-result" style="display:none;">
+        <div id="gen-ref"></div>
+        <div id="gen-text"></div>
+        <div id="gen-meaning"></div>
+        <div id="gen-actions">
+          <button class="btn btn-primary" onclick="saveGenVerse()">✦ Save to Favorites</button>
+          <button class="btn btn-outline" onclick="loadGenVerse()">Open Full View</button>
+          <button class="btn btn-outline" onclick="generateVerse()">Another ↻</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: 30-DAY TRACKER
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="tracker-modal" onclick="overlayClose(event,'tracker-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📖 Bible in 30 Days</div>
+      <button class="modal-close" onclick="closeModal('tracker-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <p style="font-size:0.85rem;color:rgba(240,226,192,0.65);line-height:1.6;margin-bottom:20px;">A structured journey through the entire Word of God — from Genesis to Revelation. Check off each day as you complete it.</p>
+      <div id="tracker-progress-wrap">
+        <div id="tracker-progress-label">
+          <span>Progress</span>
+          <span id="tracker-count">0 / 30 days</span>
+        </div>
+        <div id="tracker-bar-bg"><div id="tracker-bar"></div></div>
+      </div>
+      <div id="tracker-list"></div>
+      <div id="tracker-cumulative">
+        <div class="tracker-cum-label">Total Reading Progress</div>
+        <div class="tracker-cum-row">
+          <div class="tracker-cum-box"><div class="tracker-cum-val" id="tc-chapters">0</div><div class="tracker-cum-lbl">Chapters Read</div></div>
+          <div class="tracker-cum-box"><div class="tracker-cum-val" id="tc-verses">0</div><div class="tracker-cum-lbl">Verses Read</div></div>
+          <div class="tracker-cum-box"><div class="tracker-cum-val" id="tc-words">0</div><div class="tracker-cum-lbl">Words Read</div></div>
+          <div class="tracker-cum-box"><div class="tracker-cum-val" id="tc-pct">0%</div><div class="tracker-cum-lbl">Bible Complete</div></div>
+        </div>
+        <div class="tracker-cum-label" style="margin-top:16px;">Remaining to Finish</div>
+        <div class="tracker-rem-row">
+          <div class="tracker-rem-box"><div class="tracker-rem-val" id="tc-rem-ch">1,189</div><div class="tracker-rem-lbl">Chapters Left</div></div>
+          <div class="tracker-rem-box"><div class="tracker-rem-val" id="tc-rem-v">31,102</div><div class="tracker-rem-lbl">Verses Left</div></div>
+          <div class="tracker-rem-box"><div class="tracker-rem-val" id="tc-rem-w">783,137</div><div class="tracker-rem-lbl">Words Left</div></div>
+          <div class="tracker-rem-box"><div class="tracker-rem-val" id="tc-rem-t">~65h 15m</div><div class="tracker-rem-lbl">Est. Time Left</div></div>
+        </div>
+      </div>
+      <div class="tracker-reset">
+        <button class="btn btn-outline" onclick="resetTracker()" style="font-size:0.65rem;padding:8px 16px;margin-top:8px;">Reset Progress</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: FAMILY TREE
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="tree-modal" onclick="overlayClose(event,'tree-modal')">
+  <div class="modal" style="max-width:900px;">
+    <div class="modal-header">
+      <div class="modal-title">🌿 Biblical Family Tree</div>
+      <button class="modal-close" onclick="closeModal('tree-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <p style="font-size:0.8rem;color:rgba(201,168,76,0.5);margin-bottom:16px;font-style:italic;">The bloodline from Creation to the Messiah — hover or tap any name for details.</p>
+      <div id="tree-container"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: DAILY SCRIPTURE / SUBSCRIBE
+════════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: BIBLE READER
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="reader-modal" onclick="overlayClose(event,'reader-modal')">
+  <div class="modal" style="max-width:760px;">
+    <div class="modal-header">
+      <div class="modal-title">📜 Read the Bible — KJV</div>
+      <button class="modal-close" onclick="closeModal('reader-modal');readerStop()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <!-- Navigation -->
+      <div id="reader-nav">
+        <select id="reader-book-select" onchange="readerBookChanged()"></select>
+        <button class="reader-nav-btn" id="reader-prev-ch" onclick="readerPrevChapter()">← Prev</button>
+        <span id="reader-chapter-label">Chapter 1</span>
+        <button class="reader-nav-btn" id="reader-next-ch" onclick="readerNextChapter()">Next →</button>
+        <select id="reader-chapter-select" onchange="readerChapterChanged()"></select>
+      </div>
+      <!-- Reader toolbar -->
+      <div id="reader-toolbar">
+        <span class="rtb-label">Font:</span>
+        <button class="font-btn" onclick="adjustFont(-1)">A-</button>
+        <span id="font-size-display">16px</span>
+        <button class="font-btn" onclick="adjustFont(1)">A+</button>
+        <button id="bookmark-btn" onclick="toggleBookmark()" title="Bookmark this chapter">🔖 Bookmark</button>
+        <button id="compare-btn" onclick="openCompare()" title="Compare translations">⇄ Compare</button>
+      </div>
+      <!-- Audio bar -->
+      <div id="reader-audio-bar">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;">
+          <button id="reader-audio-play" onclick="readerToggleAudio()">▶ Read Aloud</button>
+          <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;color:var(--gold-dk);">SPEED:</span>
+          <button class="speed-btn" data-rate="0.6" onclick="setSpeed(this)">0.6×</button>
+          <button class="speed-btn" data-rate="0.8" onclick="setSpeed(this)">0.8×</button>
+          <button class="speed-btn active" data-rate="1" onclick="setSpeed(this)">1×</button>
+          <button class="speed-btn" data-rate="1.2" onclick="setSpeed(this)">1.2×</button>
+          <button class="speed-btn" data-rate="1.5" onclick="setSpeed(this)">1.5×</button>
+          <button class="speed-btn" data-rate="2" onclick="setSpeed(this)">2×</button>
+          <span id="reader-audio-status" style="margin-left:auto;">Ready</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;width:100%;margin-top:8px;flex-wrap:wrap;">
+          <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;color:var(--gold-dk);white-space:nowrap;">VOICE:</span>
+          <select id="reader-voice-select" onchange="setVoice(this)" style="flex:1;min-width:160px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.25);border-radius:2px;padding:6px 10px;font-family:'Lora',serif;font-size:0.8rem;color:var(--cream);outline:none;cursor:pointer;">
+            <option value="">Default Voice</option>
+          </select>
+        </div>
+      </div>
+      <!-- Bible reading progress -->
+      <div id="reader-bible-progress">
+        <div id="rbp-bar-bg"><div id="rbp-bar" style="width:0%"></div></div>
+        <div id="rbp-label"><span id="rbp-left">0 chapters read</span><span id="rbp-right">1,189 total</span></div>
+        <div id="rbp-stats">
+          <div class="rbp-stat">Read — Chapters: <span id="rbp-chapters">0</span> &nbsp;·&nbsp; Verses: <span id="rbp-verses">0</span> &nbsp;·&nbsp; Words: <span id="rbp-words">0</span></div>
+          <div class="rbp-stat rbp-rem">Remaining — Chapters: <span id="rbp-rem-ch">1,189</span> &nbsp;·&nbsp; Verses: <span id="rbp-rem-v">31,102</span> &nbsp;·&nbsp; Words: <span id="rbp-rem-w">783,137</span> &nbsp;·&nbsp; ~<span id="rbp-rem-time">65h 15m</span></div>
+        </div>
+      </div>
+      <!-- Loading / Error -->
+      <div id="reader-loading"><span class="loading-dots">Loading chapter</span></div>
+      <div id="reader-error"></div>
+      <!-- Verses -->
+      <div id="reader-verses"></div>
+      <!-- Cross-references -->
+      <div id="xref-panel">
+        <div id="xref-label">✦ Cross-References</div>
+        <div id="xref-list"></div>
+      </div>
+      <!-- Verse nav controls -->
+      <div id="reader-verse-controls" style="display:none;">
+        <button class="reader-nav-btn" onclick="readerPrevVerse()">← Prev Verse</button>
+        <span id="reader-verse-label" style="font-family:'Cinzel',serif;font-size:0.68rem;color:var(--gold-dk);padding:0 8px;"></span>
+        <button class="reader-nav-btn" onclick="readerNextVerse()">Next Verse →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: CREATION TIMELINE
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="timeline-modal" onclick="overlayClose(event,'timeline-modal')">
+  <div class="modal" style="max-width:860px;" id="timeline-modal-inner">
+    <div class="modal-header">
+      <div class="modal-title">🕊 The Seven Days of Creation</div>
+      <button class="modal-close" onclick="closeModal('timeline-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <p style="font-size:0.82rem;color:rgba(201,168,76,0.5);font-style:italic;margin-bottom:22px;text-align:center;">Genesis 1:1 – 2:3 · King James Version</p>
+      <div class="timeline-wrap" id="timeline-days"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: PERSON POPUP (Family Tree)
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="person-modal" onclick="overlayClose(event,'person-modal')">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <div id="person-modal-name">Person</div>
+      <button class="modal-close" onclick="closeModal('person-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <div id="person-modal-ref-label"></div>
+      <div id="person-modal-verse"><span id="person-modal-loading">Fetching scripture…</span></div>
+      <div id="person-modal-desc"></div>
+    </div>
+  </div>
+</div>
+
+      <button class="modal-close" onclick="closeModal('dev-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="dev-modal-body">
+      <div class="modal-ornament"></div>
+
+      <!-- Intro -->
+      <p style="font-size:0.85rem;color:rgba(240,226,192,0.65);line-height:1.7;margin-bottom:6px;">
+        <strong style="color:var(--gold-lt);">Be Still and Know</strong> is a zero-dependency, single-file static web application. No build step, no server, no framework. Everything runs in the browser using vanilla HTML, CSS, and JavaScript — hosted free on any static host.
+      </p>
+
+      <!-- Site Stats -->
+      <div class="dev-section-label">Site Metrics</div>
+      <div class="dev-stats">
+        <div class="dev-stat"><div class="dev-stat-val">3,814</div><div class="dev-stat-label">Lines of Code</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">4</div><div class="dev-stat-label">Languages</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">0</div><div class="dev-stat-label">Dependencies</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">0</div><div class="dev-stat-label">Build Steps</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">66</div><div class="dev-stat-label">Bible Books</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">30</div><div class="dev-stat-label">Study Days</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">13</div><div class="dev-stat-label">Feature Modals</div></div>
+        <div class="dev-stat"><div class="dev-stat-val">1,189</div><div class="dev-stat-label">Bible Chapters</div></div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="dev-section-label">Technology Stack</div>
+      <div class="dev-stack">
+        <div class="dev-chip"><span class="dev-chip-icon">📄</span>HTML5 — 841 lines <span class="dev-chip-tag">STRUCTURE</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">🎨</span>CSS3 — 890 lines <span class="dev-chip-tag">STYLE</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">⚡</span>Vanilla JS — 2,065 lines <span class="dev-chip-tag">LOGIC</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">📋</span>JSON — 18 lines <span class="dev-chip-tag">PWA MANIFEST</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">📖</span>bible-api.com <span class="dev-chip-tag">FREE · NO KEY</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">🔍</span>bolls.life API <span class="dev-chip-tag">WORD SEARCH</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">🔊</span>Web Speech API <span class="dev-chip-tag">BROWSER NATIVE</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">💾</span>localStorage (7 keys) <span class="dev-chip-tag">PERSISTENCE</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">📲</span>Service Worker <span class="dev-chip-tag">PWA OFFLINE</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">🔤</span>Google Fonts CDN <span class="dev-chip-tag">CINZEL · LORA</span></div>
+        <div class="dev-chip"><span class="dev-chip-icon">☁</span>GitHub Pages <span class="dev-chip-tag">HOSTING</span></div>
+      </div>
+
+      <!-- Architecture Diagram -->
+      <div class="dev-section-label">System Architecture</div>
+      <div id="arch-diagram">
+
+        <!-- Layer 0: User -->
+        <div class="arch-layer">
+          <div class="arch-layer-label">User · Browser</div>
+          <div class="arch-row">
+            <div class="arch-node highlight" style="min-width:300px;">
+              <span class="arch-node-icon">🧑</span>
+              <div class="arch-node-name">User Interaction</div>
+              <div class="arch-node-sub">Search · Click · Navigate · Type · Listen</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow down -->
+        <div class="arch-connectors"><div class="arch-arrow"><div class="arch-arrow-line"></div><div class="arch-arrow-label">DOM events</div></div></div>
+
+        <!-- Layer 1: Nav -->
+        <div class="arch-layer">
+          <div class="arch-layer-label">Navigation Bar · 6 Entry Points</div>
+          <div class="arch-row">
+            <div class="arch-node"><span class="arch-node-icon">📜</span><div class="arch-node-name">Read Bible</div></div>
+            <div class="arch-node"><span class="arch-node-icon">✦</span><div class="arch-node-name">Generate Verse</div></div>
+            <div class="arch-node"><span class="arch-node-icon">📖</span><div class="arch-node-name">30-Day Plan</div></div>
+            <div class="arch-node"><span class="arch-node-icon">🌿</span><div class="arch-node-name">Family Tree</div></div>
+            <div class="arch-node"><span class="arch-node-icon">🕊</span><div class="arch-node-name">Creation</div></div>
+            <div class="arch-node"><span class="arch-node-icon">⚙</span><div class="arch-node-name">Developer</div></div>
+          </div>
+        </div>
+
+        <!-- Arrow down -->
+        <div class="arch-connectors"><div class="arch-arrow"><div class="arch-arrow-line"></div><div class="arch-arrow-label">openModal(id)</div></div></div>
+
+        <!-- Layer 2: Feature Modules -->
+        <div class="arch-layer">
+          <div class="arch-layer-label">Feature Modules · Vanilla JS</div>
+          <div class="arch-row">
+            <div class="arch-node">
+              <span class="arch-node-icon">🔍</span>
+              <div class="arch-node-name">Verse Lookup</div>
+              <div class="arch-node-sub">fetchAndDisplay()<br>findMeaning()</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node-icon">📜</span>
+              <div class="arch-node-name">Bible Reader</div>
+              <div class="arch-node-sub">readerLoadChapter()<br>readerRenderVerses()</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node-icon">⭐</span>
+              <div class="arch-node-name">Favorites</div>
+              <div class="arch-node-sub">saveVerse()<br>renderFavorites()<br>renderTicker()</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node-icon">✦</span>
+              <div class="arch-node-name">Generator</div>
+              <div class="arch-node-sub">generateVerse()<br>VERSE_POOL[38]</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node-icon">☑</span>
+              <div class="arch-node-name">30-Day Tracker</div>
+              <div class="arch-node-sub">renderTracker()<br>toggleDay()</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node-icon">🌿</span>
+              <div class="arch-node-name">Family Tree</div>
+              <div class="arch-node-sub">renderTree()<br>openPersonModal()</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow row to services -->
+        <div class="arch-connectors" style="gap:4px;padding:6px 0;">
+          <div class="arch-arrow"><div class="arch-arrow-line"></div><div class="arch-arrow-label">fetch()</div></div>
+          <div style="width:120px;"></div>
+          <div class="arch-arrow"><div class="arch-arrow-line"></div><div class="arch-arrow-label">setItem / getItem</div></div>
+          <div style="width:80px;"></div>
+          <div class="arch-arrow"><div class="arch-arrow-line"></div><div class="arch-arrow-label">speak()</div></div>
+        </div>
+
+        <!-- Layer 3: Services -->
+        <div class="arch-layer">
+          <div class="arch-layer-label">Core Services</div>
+          <div class="arch-row">
+            <div class="arch-node external">
+              <span class="arch-node-icon">🌐</span>
+              <div class="arch-node-name">bible-api.com</div>
+              <div class="arch-node-sub">Free · No key · CORS<br>KJV translation<br>JSON response</div>
+            </div>
+            <div class="arch-node storage">
+              <span class="arch-node-icon">💾</span>
+              <div class="arch-node-name">localStorage</div>
+              <div class="arch-node-sub">wow_favorites[ ]<br>wow_tracker{ }<br>Persists across sessions</div>
+            </div>
+            <div class="arch-node" style="border-color:rgba(201,168,76,0.4);">
+              <span class="arch-node-icon">🔊</span>
+              <div class="arch-node-name">Web Speech API</div>
+              <div class="arch-node-sub">speechSynthesis<br>SpeechSynthesisUtterance<br>getVoices() · rate control</div>
+            </div>
+            <div class="arch-node" style="border-color:rgba(200,100,220,0.3);">
+              <span class="arch-node-icon">🎨</span>
+              <div class="arch-node-name">CSS Engine</div>
+              <div class="arch-node-sub">@keyframes animations<br>backdrop-filter blur<br>CSS custom properties</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow down -->
+        <div class="arch-connectors"><div class="arch-arrow"><div class="arch-arrow-line"></div><div class="arch-arrow-label">HTTP / DNS</div></div></div>
+
+        <!-- Layer 4: Infrastructure -->
+        <div class="arch-layer">
+          <div class="arch-layer-label">Hosting Infrastructure</div>
+          <div class="arch-row">
+            <div class="arch-node external" style="min-width:200px;">
+              <span class="arch-node-icon">☁</span>
+              <div class="arch-node-name">GitHub Pages</div>
+              <div class="arch-node-sub">Static file hosting · Free · HTTPS · CDN</div>
+            </div>
+            <div class="arch-node external" style="min-width:200px;">
+              <span class="arch-node-icon">🔤</span>
+              <div class="arch-node-name">Google Fonts CDN</div>
+              <div class="arch-node-sub">Cinzel Decorative · Cinzel · Lora</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end arch-diagram -->
+
+      <!-- API Reference -->
+      <div class="dev-section-label">API Reference — bible-api.com</div>
+
+      <div class="dev-api-box">
+        <div><span class="dev-api-method">GET</span><span class="dev-api-endpoint">https://bible-api.com/{reference}?translation=kjv</span></div>
+        <div class="dev-api-desc">Fetches one or more KJV verses by reference. Supports ranges (John 3:16-18), full chapters (Genesis 1), and named passages. Free, no API key required, CORS-enabled.</div>
+        <div class="dev-code"><span class="cm">// Single verse lookup</span>
+<span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="str">`https://bible-api.com/john+3:16?translation=kjv`</span>);
+<span class="kw">const</span> data = <span class="kw">await</span> res.json();
+<span class="cm">// data.reference  → "John 3:16"</span>
+<span class="cm">// data.text       → "For God so loved the world..."</span>
+<span class="cm">// data.verses[]   → [{verse: 16, text: "..."}]</span></div>
+      </div>
+
+      <div class="dev-api-box">
+        <div><span class="dev-api-method">GET</span><span class="dev-api-endpoint">https://bible-api.com/{book}+{chapter}?translation=kjv</span></div>
+        <div class="dev-api-desc">Fetches an entire chapter for the Bible Reader. Returns all verses as an array — used by readerLoadChapter() to render each verse with its star button and audio queue.</div>
+        <div class="dev-code"><span class="cm">// Full chapter for the Reader (e.g. Genesis 1)</span>
+<span class="kw">const</span> apiRef = <span class="str">`genesis+1`</span>;
+<span class="kw">const</span> data = <span class="kw">await</span> fetch(<span class="str">`https://bible-api.com/${apiRef}?translation=kjv`</span>).then(r => r.json());
+<span class="cm">// data.verses[] → [{verse:1, text:"In the beginning..."}, ...]</span>
+<span class="cm">// Rendered as individual rows with ★ star + audio highlight</span></div>
+      </div>
+
+      <!-- Data Flow -->
+      <div class="dev-section-label">Key Data Flows</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="dev-api-box" style="padding:12px 16px;">
+          <div style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--gold-lt);margin-bottom:6px;">📍 Verse Search Flow</div>
+          <div style="font-size:0.78rem;color:rgba(240,226,192,0.7);line-height:1.7;">
+            User types reference → <code style="color:#7eb8e8;">lookupVerse()</code> → normalizes text → <code style="color:#7eb8e8;">fetchAndDisplay()</code> → GET bible-api.com → parses <code style="color:#c3e88d;">data.verses[]</code> → renders verse card → <code style="color:#7eb8e8;">findMeaning()</code> checks MEANINGS{} map → falls back to <code style="color:#7eb8e8;">generateReflection()</code> → displays Modern Reflection
+          </div>
+        </div>
+        <div class="dev-api-box" style="padding:12px 16px;">
+          <div style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--gold-lt);margin-bottom:6px;">⭐ Save to Favorites Flow</div>
+          <div style="font-size:0.78rem;color:rgba(240,226,192,0.7);line-height:1.7;">
+            User clicks ★ (verse card or Reader) → <code style="color:#7eb8e8;">saveVerse()</code> or <code style="color:#7eb8e8;">readerStarVerse()</code> → pushes <code style="color:#c3e88d;">{ref, text, meaning}</code> to <code style="color:#8ed49a;">favorites[]</code> → <code style="color:#8ed49a;">localStorage.setItem('wow_favorites')</code> → <code style="color:#7eb8e8;">renderFavorites()</code> updates chips → <code style="color:#7eb8e8;">renderTicker()</code> rebuilds scrolling banner
+          </div>
+        </div>
+        <div class="dev-api-box" style="padding:12px 16px;">
+          <div style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--gold-lt);margin-bottom:6px;">🔊 Audio Read-Aloud Flow</div>
+          <div style="font-size:0.78rem;color:rgba(240,226,192,0.7);line-height:1.7;">
+            User clicks ▶ → <code style="color:#7eb8e8;">readerToggleAudio()</code> → loops <code style="color:#7eb8e8;">readerSpeakNext()</code> verse-by-verse → creates <code style="color:#c3e88d;">new SpeechSynthesisUtterance(text)</code> → sets <code style="color:#c3e88d;">.voice</code> (from voice selector) + <code style="color:#c3e88d;">.rate</code> (speed button) → <code style="color:#7eb8e8;">speechSynthesis.speak(utt)</code> → highlights active verse row → <code style="color:#c3e88d;">utt.onend</code> advances to next verse
+          </div>
+        </div>
+        <div class="dev-api-box" style="padding:12px 16px;">
+          <div style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--gold-lt);margin-bottom:6px;">🌿 Family Tree Person Click Flow</div>
+          <div style="font-size:0.78rem;color:rgba(240,226,192,0.7);line-height:1.7;">
+            User clicks SVG/HTML tree node → <code style="color:#7eb8e8;">openPersonModal(name)</code> → looks up <code style="color:#c3e88d;">TREE_PEOPLE[name]</code> → opens person modal → fetches first scripture reference from bible-api.com → renders verse text + biographical description with scripture reference
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Matrix -->
+      <div class="dev-section-label">Feature × Technology Matrix</div>
+      <div style="overflow-x:auto;">
+        <table class="dev-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Data Source</th>
+              <th>Persistence</th>
+              <th>Technologies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Verse of the Day</td><td>VOTD_POOL[64] + bible-api.com daily rotation</td><td>—</td><td><span class="dev-badge api">API</span><span class="dev-badge js">Date.now()</span></td></tr>
+            <tr><td>Verse Search</td><td>bible-api.com REST</td><td>—</td><td><span class="dev-badge api">API</span><span class="dev-badge js">Fetch</span><span class="dev-badge html">DOM</span></td></tr>
+            <tr><td>Word Search</td><td>bolls.life KJV concordance API</td><td>—</td><td><span class="dev-badge api">API</span><span class="dev-badge js">async/await</span><span class="dev-badge html">Results DOM</span></td></tr>
+            <tr><td>Modern Reflection</td><td>MEANINGS{} (25 hand-written) + generateReflection()</td><td>—</td><td><span class="dev-badge js">JS Object Map</span></td></tr>
+            <tr><td>Bible Reader</td><td>bible-api.com (full chapters)</td><td>wow_read_log</td><td><span class="dev-badge api">API</span><span class="dev-badge js">Dynamic DOM</span><span class="dev-badge store">localStorage</span></td></tr>
+            <tr><td>Font Size Control</td><td>CSS variable via JS</td><td>wow_fontsize</td><td><span class="dev-badge css">CSS font-size</span><span class="dev-badge store">localStorage</span></td></tr>
+            <tr><td>Highlight Colors</td><td>5-color highlight system per verse</td><td>wow_highlights</td><td><span class="dev-badge css">CSS classes</span><span class="dev-badge store">localStorage</span></td></tr>
+            <tr><td>Bookmarks</td><td>Single chapter bookmark</td><td>wow_bookmark</td><td><span class="dev-badge js">JSON object</span><span class="dev-badge store">localStorage</span></td></tr>
+            <tr><td>Cross-References</td><td>XREFS{} — 24 hand-curated verse maps</td><td>—</td><td><span class="dev-badge js">JS Object Map</span><span class="dev-badge html">Chip DOM</span></td></tr>
+            <tr><td>Compare Translations</td><td>bible-api.com (KJV + WEB + BBE)</td><td>—</td><td><span class="dev-badge api">3× Fetch</span><span class="dev-badge js">Promise.all()</span></td></tr>
+            <tr><td>Read Aloud + Voices</td><td>Browser SpeechSynthesis</td><td>—</td><td><span class="dev-badge speech">Web Speech API</span><span class="dev-badge js">utterance.onend</span></td></tr>
+            <tr><td>Reading Streak</td><td>Daily date comparison</td><td>wow_streak</td><td><span class="dev-badge js">Date.toISOString()</span><span class="dev-badge store">localStorage</span></td></tr>
+            <tr><td>Recently Viewed</td><td>Last 5 chapters opened</td><td>wow_recent</td><td><span class="dev-badge store">localStorage</span><span class="dev-badge js">Array[5]</span></td></tr>
+            <tr><td>Reading Progress</td><td>Tracks every chapter opened</td><td>wow_read_log</td><td><span class="dev-badge store">localStorage</span><span class="dev-badge js">Stats calc</span></td></tr>
+            <tr><td>Favorites</td><td>User action — star button</td><td>wow_favorites</td><td><span class="dev-badge store">localStorage</span><span class="dev-badge js">JSON.parse/stringify</span></td></tr>
+            <tr><td>Ticker Banner</td><td>Favorites array</td><td>Via favorites</td><td><span class="dev-badge css">CSS @keyframes</span><span class="dev-badge js">Dynamic HTML</span></td></tr>
+            <tr><td>Notes & Insights</td><td>User journaling per verse</td><td>wow_notes</td><td><span class="dev-badge store">localStorage</span><span class="dev-badge js">CRUD functions</span></td></tr>
+            <tr><td>Prayer Journal</td><td>Dated prayers with answered status</td><td>wow_prayers</td><td><span class="dev-badge store">localStorage</span><span class="dev-badge js">Filter + CRUD</span></td></tr>
+            <tr><td>30-Day Tracker</td><td>PLAN_30[30] (built-in data)</td><td>wow_tracker</td><td><span class="dev-badge store">localStorage</span><span class="dev-badge js">Dynamic DOM</span></td></tr>
+            <tr><td>Family Tree</td><td>TREE_PEOPLE{} + bible-api.com</td><td>—</td><td><span class="dev-badge js">CSS Flexbox Tree</span><span class="dev-badge api">API (person popup)</span></td></tr>
+            <tr><td>Biblical Timeline</td><td>BIBTL_OT[35] + BIBTL_NT[18] (built-in)</td><td>—</td><td><span class="dev-badge js">Tabbed DOM</span><span class="dev-badge css">CSS Timeline</span></td></tr>
+            <tr><td>Creation Timeline</td><td>CREATION_DAYS[7] (built-in)</td><td>—</td><td><span class="dev-badge js">Dynamic DOM</span><span class="dev-badge css">CSS Timeline</span></td></tr>
+            <tr><td>Generate Verse</td><td>VERSE_POOL[38] + bible-api.com</td><td>—</td><td><span class="dev-badge api">API</span><span class="dev-badge js">Math.random()</span></td></tr>
+            <tr><td>PWA / Install</td><td>manifest.json + Service Worker</td><td>Cache API</td><td><span class="dev-badge js">sw.js</span><span class="dev-badge html">manifest.json</span></td></tr>
+            <tr><td>Background Scene</td><td>Pexels CC0 parchment photo</td><td>—</td><td><span class="dev-badge css">CSS background</span><span class="dev-badge css">overlay gradient</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Deploy note -->
+      <div class="dev-section-label">Deployment</div>
+      <div class="dev-api-box">
+        <div class="dev-code"><span class="cm"># Deploy to GitHub Pages (free, HTTPS, custom domain supported)</span>
+git init && git add index.html
+git commit -m <span class="str">"Be Still and Know — KJV Scripture app"</span>
+git remote add origin https://github.com/YOUR_USERNAME/be-still-and-know.git
+git push -u origin main
+<span class="cm"># Then: Settings → Pages → Source: main / root → Save</span>
+<span class="cm"># Live at: https://YOUR_USERNAME.github.io/be-still-and-know/</span></div>
+      </div>
+
+    </div><!-- /modal-body -->
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: NOTES
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="notes-modal" onclick="overlayClose(event,'notes-modal')">
+  <div class="modal" style="max-width:min(96vw,900px);">
+    <div class="modal-header">
+      <div class="modal-title">📝 My Notes &amp; Insights</div>
+      <button class="modal-close" onclick="closeModal('notes-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+
+      <!-- List View -->
+      <div id="notes-list-view">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+          <p style="font-size:0.82rem;color:rgba(240,226,192,0.6);line-height:1.6;">Your personal scripture journal — insights, reflections, and discoveries from your reading.</p>
+          <button class="btn btn-primary" style="font-size:0.68rem;padding:9px 18px;" onclick="openNoteEditor()">+ New Note</button>
+        </div>
+        <div id="notes-list"><div id="notes-empty">No notes yet — open the Bible reader, tap ✏ beside any verse, and start journaling.</div></div>
+      </div>
+
+      <!-- Edit View (hidden by default) -->
+      <div id="notes-edit-view" style="display:none;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+          <button class="btn btn-outline" style="font-size:0.65rem;padding:7px 14px;" onclick="showNotesList()">← Back to Notes</button>
+          <span style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dk);" id="notes-edit-mode-label">NEW NOTE</span>
+        </div>
+        <div id="notes-ref-display"></div>
+        <div id="notes-verse-display"></div>
+        <div id="notes-insight-label">Your Insight</div>
+        <textarea id="notes-insight-input" placeholder="Write your reflection, insight, or prayer about this passage…"></textarea>
+        <div class="notes-action-row">
+          <button class="btn btn-primary" onclick="saveNote()">✦ Save Note</button>
+          <button class="btn btn-outline" onclick="showNotesList()">Cancel</button>
+          <button class="btn btn-outline" id="notes-delete-btn" style="display:none;border-color:rgba(200,60,60,0.3);color:rgba(220,80,80,0.7);" onclick="deleteCurrentNote()">Delete</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: COMPARE TRANSLATIONS ════════════════════════ -->
+<div class="modal-overlay" id="compare-modal" onclick="overlayClose(event,'compare-modal')">
+  <div class="modal" style="max-width:min(96vw,860px);">
+    <div class="modal-header">
+      <div class="modal-title">⇄ Compare Translations</div>
+      <button class="modal-close" onclick="closeModal('compare-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <div id="compare-ref-label" style="font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.12em;color:var(--gold);margin-bottom:18px;"></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div class="compare-col">
+          <div class="compare-trans-label">KJV — King James Version</div>
+          <div class="compare-text" id="cmp-kjv"><span class="compare-loading">Loading…</span></div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-trans-label">WEB — World English Bible</div>
+          <div class="compare-text" id="cmp-web"><span class="compare-loading">Loading…</span></div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-trans-label">BBE — Bible in Basic English</div>
+          <div class="compare-text" id="cmp-bbe"><span class="compare-loading">Loading…</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: WORD SEARCH ══════════════════════════════════ -->
+<div class="modal-overlay" id="wordsearch-modal" onclick="overlayClose(event,'wordsearch-modal')">
+  <div class="modal" style="max-width:min(96vw,840px);">
+    <div class="modal-header">
+      <div class="modal-title">🔍 Word Search — KJV Concordance</div>
+      <button class="modal-close" onclick="closeModal('wordsearch-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <p style="font-size:0.82rem;color:rgba(240,226,192,0.6);margin-bottom:16px;line-height:1.6;">Search any word or phrase across the entire King James Bible.</p>
+      <div id="ws-input-row">
+        <input id="ws-input" type="text" placeholder="e.g. grace, love, faith, righteousness…" onkeydown="if(event.key==='Enter')runWordSearch()"/>
+        <button id="ws-btn" onclick="runWordSearch()">Search</button>
+      </div>
+      <div id="ws-count" style="display:none;"></div>
+      <div id="ws-status">Enter a word or phrase above and press Search.</div>
+      <div id="ws-results"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: PRAYER JOURNAL ═══════════════════════════════ -->
+<div class="modal-overlay" id="prayer-modal" onclick="overlayClose(event,'prayer-modal')">
+  <div class="modal" style="max-width:min(96vw,820px);">
+    <div class="modal-header">
+      <div class="modal-title">🙏 Prayer Journal</div>
+      <button class="modal-close" onclick="closeModal('prayer-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <div id="prayer-list-view">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+          <p style="font-size:0.82rem;color:rgba(240,226,192,0.6);line-height:1.6;">Your personal prayer log — write prayers, mark them answered, and track how God moves.</p>
+          <button class="btn btn-primary" style="font-size:0.68rem;padding:9px 18px;" onclick="openPrayerEditor()">+ New Prayer</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;" id="prayer-filter-row">
+          <button class="speed-btn active" onclick="filterPrayers('all',this)">All</button>
+          <button class="speed-btn" onclick="filterPrayers('praying',this)">🙏 Praying</button>
+          <button class="speed-btn" onclick="filterPrayers('answered',this)">✅ Answered</button>
+        </div>
+        <div id="prayer-list"><div id="prayer-empty" style="text-align:center;padding:40px;font-family:'Cinzel',serif;font-size:0.75rem;color:rgba(201,168,76,0.3);font-style:italic;">No prayers yet — begin your journal.</div></div>
+      </div>
+      <div id="prayer-edit-view" style="display:none;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+          <button class="btn btn-outline" style="font-size:0.65rem;padding:7px 14px;" onclick="showPrayerList()">← Back</button>
+          <span style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dk);" id="prayer-edit-label">NEW PRAYER</span>
+        </div>
+        <input id="prayer-title-input" type="text" placeholder="Prayer title…"/>
+        <textarea id="prayer-text-input" placeholder="Write your prayer…"></textarea>
+        <select id="prayer-status-select">
+          <option value="praying">🙏 Currently Praying</option>
+          <option value="answered">✅ Answered</option>
+        </select>
+        <div class="notes-action-row">
+          <button class="btn btn-primary" onclick="savePrayer()">✦ Save Prayer</button>
+          <button class="btn btn-outline" onclick="showPrayerList()">Cancel</button>
+          <button class="btn btn-outline" id="prayer-delete-btn" style="display:none;border-color:rgba(200,60,60,0.3);color:rgba(220,80,80,0.7);" onclick="deleteCurrentPrayer()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: BIBLICAL TIMELINE ════════════════════════════ -->
+<div class="modal-overlay" id="bibtl-modal" onclick="overlayClose(event,'bibtl-modal')">
+  <div class="modal" style="max-width:min(96vw,900px);">
+    <div class="modal-header">
+      <div class="modal-title">🕊 Biblical History Timeline</div>
+      <button class="modal-close" onclick="closeModal('bibtl-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ornament"></div>
+      <div class="bibtl-tabs">
+        <button class="bibtl-tab active" onclick="showBibtlTab('ot',this)">Old Testament</button>
+        <button class="bibtl-tab" onclick="showBibtlTab('nt',this)">New Testament & Church</button>
+        <button class="bibtl-tab" onclick="showBibtlTab('creation',this)">7 Days of Creation</button>
+      </div>
+      <div id="bibtl-ot"></div>
+      <div id="bibtl-nt" style="display:none;"></div>
+      <div id="bibtl-creation" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tooltip for Family Tree (hover only) -->
+<div id="tree-tooltip"><div id="tree-tooltip-name"></div><div id="tree-tooltip-body"></div></div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
