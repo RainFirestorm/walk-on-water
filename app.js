@@ -1736,8 +1736,14 @@ function readerOpenNote(ref, verseText) {
 /* ════════════════════════════════════════════════════════════
    HAMBURGER MENU
 ════════════════════════════════════════════════════════════ */
-function toggleHamburger(){ document.getElementById('nav-links').classList.toggle('open'); }
-function closeHamburger(){ document.getElementById('nav-links').classList.remove('open'); }
+function toggleHamburger(){
+  document.getElementById('nav-links').classList.toggle('open');
+  document.getElementById('nav-backdrop').classList.toggle('open');
+}
+function closeHamburger(){
+  document.getElementById('nav-links').classList.remove('open');
+  document.getElementById('nav-backdrop').classList.remove('open');
+}
 
 /* ════════════════════════════════════════════════════════════
    VERSE OF THE DAY

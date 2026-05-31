@@ -141,9 +141,9 @@
     #site-title {
       font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem,5vw,3.2rem);
       color: var(--gold-lt); letter-spacing: 0.06em;
-      text-shadow: 0 0 40px rgba(201,168,76,0.5), 0 2px 4px rgba(0,0,0,0.8); line-height: 1.2;
+      text-shadow: 0 0 40px rgba(201,168,76,0.4), 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7); line-height: 1.2;
     }
-    #site-subtitle { font-family: 'Cinzel', serif; font-size: clamp(0.62rem,2vw,0.82rem); letter-spacing: 0.3em; color: var(--gold-dk); margin-top: 10px; text-transform: uppercase; }
+    #site-subtitle { font-family: 'Cinzel', serif; font-size: clamp(0.62rem,2vw,0.82rem); letter-spacing: 0.3em; color: rgba(232,201,106,0.85); margin-top: 10px; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 20px rgba(0,0,0,0.5); }
 
     /* ── Search ─────────────────────────────────────────────── */
     #search-section { position: relative; z-index: 10; width: min(600px,92vw); margin: 28px auto 0; }
@@ -643,16 +643,69 @@
     #person-modal-loading {
       font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em;
       color: rgba(201,168,76,0.45); text-align: center; padding: 12px;
-    }/* ── Mobile hamburger ───────────────────────────────────── */
-    #hamburger { display:none; background:none; border:1px solid rgba(201,168,76,0.3); border-radius:3px; padding:6px 10px; cursor:pointer; color:var(--gold); font-size:1.1rem; }
+    }/* ── Mobile side drawer navigation ─────────────────────── */
+    #hamburger {
+      display:none; background:none; border:1px solid rgba(201,168,76,0.3);
+      border-radius:3px; padding:6px 12px; cursor:pointer; color:var(--gold);
+      font-size:1.2rem; z-index:210; position:relative; line-height:1; flex-shrink:0;
+      transition: all 0.2s;
+    }
+    #hamburger:hover { background:rgba(201,168,76,0.1); }
+    /* Backdrop */
+    #nav-backdrop {
+      display:none; position:fixed; inset:0; z-index:205;
+      background:rgba(0,0,0,0.55); backdrop-filter:blur(2px);
+    }
+    #nav-backdrop.open { display:block; }
+    /* Side drawer */
+    #nav-links {
+      position:fixed; top:0; left:-290px; bottom:0; width:272px;
+      z-index:206; display:flex !important; flex-direction:column;
+      background:linear-gradient(160deg,#0a1c38 0%,#06101f 100%);
+      border-right:1px solid rgba(201,168,76,0.2);
+      padding:0; gap:0; overflow-y:auto;
+      transition:left 0.28s cubic-bezier(0.4,0,0.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,0.5);
+    }
+    #nav-links.open { left:0; }
+    /* Drawer header */
+    #nav-drawer-header {
+      display:none; align-items:center; justify-content:space-between;
+      padding:16px 16px 12px; border-bottom:1px solid rgba(201,168,76,0.15);
+      flex-shrink:0;
+    }
+    #nav-drawer-title {
+      font-family:'Cinzel Decorative',serif; font-size:0.78rem;
+      letter-spacing:0.08em; color:var(--gold-lt);
+    }
+    #nav-drawer-close {
+      background:none; border:none; color:rgba(201,168,76,0.5);
+      font-size:1.2rem; cursor:pointer; padding:4px 8px; border-radius:2px;
+      transition:all 0.2s; line-height:1;
+    }
+    #nav-drawer-close:hover { color:var(--gold-lt); background:rgba(201,168,76,0.1); }
+    /* Drawer items */
+    #nav-links .nav-btn {
+      width:100%; text-align:left; font-size:0.78rem; padding:14px 20px;
+      border-radius:0; border:none; border-bottom:1px solid rgba(201,168,76,0.07);
+      letter-spacing:0.08em;
+    }
+    #nav-links .nav-btn:hover { background:rgba(201,168,76,0.08); }
+    #nav-links .nav-btn.accent { background:rgba(201,168,76,0.1); border-bottom-color:rgba(201,168,76,0.15); }
+    #nav-links .nav-label { display:inline !important; }
+    #nav-links .nav-btn-icon { font-size:1rem; margin-right:10px; }
     @media(max-width:700px){
       #hamburger { display:flex; align-items:center; }
-      #nav-links { display:none; flex-direction:column; position:fixed; top:calc(var(--ticker-h)+var(--nav-h)); left:0; right:0; background:rgba(6,16,40,0.98); border-bottom:1px solid rgba(201,168,76,0.2); padding:8px; z-index:198; gap:6px; }
-      #nav-links.open { display:flex; }
-      #nav-links .nav-btn { width:100%; text-align:left; font-size:0.75rem; padding:11px 14px; }
-      #nav-links .nav-label { display:inline !important; }
+      #nav-drawer-header { display:flex; }
+      /* Hide inline nav links on mobile — drawer only */
     }
-    @media(min-width:701px){ #nav-links { display:flex !important; gap:6px; } }
+    @media(min-width:701px){
+      #nav-backdrop { display:none !important; }
+      #nav-links { position:static; flex-direction:row !important; background:transparent; border:none; box-shadow:none; width:auto; transition:none; padding:0; overflow:visible; }
+      #nav-drawer-header { display:none !important; }
+      #nav-links .nav-btn { width:auto; border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:8px 16px; font-size:0.68rem; }
+      .nav-label { display:inline !important; }
+    }
 
     /* ── Verse of the Day ───────────────────────────────────── */
     #votd-card {
@@ -793,8 +846,13 @@
 
 <!-- ═══ NAV BAR ══════════════════════════════════════════════ -->
 <div id="nav-bar">
-  <button id="hamburger" onclick="toggleHamburger()">☰</button>
-  <div id="nav-links">
+  <button id="hamburger" onclick="toggleHamburger()" aria-label="Open menu">☰</button>
+  <div id="nav-backdrop" onclick="closeHamburger()"></div>
+  <div id="nav-links" role="navigation" aria-label="Main navigation">
+    <div id="nav-drawer-header">
+      <span id="nav-drawer-title">✝ Be Still and Know</span>
+      <button id="nav-drawer-close" onclick="closeHamburger()" aria-label="Close menu">✕</button>
+    </div>
     <button class="nav-btn accent" onclick="openModal('reader-modal');closeHamburger()">
       <span class="nav-btn-icon">📜</span><span class="nav-label">Read Bible</span>
     </button>
