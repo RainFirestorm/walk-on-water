@@ -146,7 +146,7 @@
       color: var(--gold-lt); letter-spacing: 0.06em;
       text-shadow: 0 0 40px rgba(201,168,76,0.4), 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7); line-height: 1.2;
     }
-    #site-subtitle { font-family: 'Cinzel', serif; font-size: clamp(0.62rem,2vw,0.82rem); letter-spacing: 0.3em; color: rgba(232,201,106,0.85); margin-top: 10px; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 20px rgba(0,0,0,0.5); }
+    #site-subtitle { font-family: 'Cinzel', serif; font-size: clamp(0.62rem,2vw,0.82rem); letter-spacing: 0.3em; color: rgba(240,215,130,0.95); margin-top: 10px; text-transform: uppercase; text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 2px 16px rgba(0,0,0,0.8); }
 
     /* ── Search ─────────────────────────────────────────────── */
     #search-section { position: relative; z-index: 10; width: min(600px,92vw); margin: 28px auto 0; }
@@ -167,7 +167,7 @@
       cursor: pointer; text-transform: uppercase; transition: filter 0.2s;
     }
     #search-btn:hover { filter: brightness(1.15); }
-    #search-hint { text-align: center; margin-top: 8px; font-size: 0.72rem; color: rgba(201,168,76,0.45); font-style: italic; letter-spacing: 0.04em; }
+    #search-hint { text-align: center; margin-top: 8px; font-size: 0.72rem; color: rgba(220,190,110,0.8); font-style: italic; letter-spacing: 0.04em; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
     #quick-picks {
       display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px;
       min-height: 32px;
@@ -175,9 +175,10 @@
     }
     #quick-picks.fading { opacity: 0; }
     .quick-pick {
-      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: 2px;
-      padding: 5px 12px; font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.08em;
-      color: rgba(201,168,76,0.7); cursor: pointer; transition: all 0.2s;
+      background: rgba(4,10,24,0.65); border: 1px solid rgba(201,168,76,0.45); border-radius: 2px;
+      padding: 6px 14px; font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.08em;
+      color: rgba(232,201,106,0.95); cursor: pointer; transition: all 0.2s;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8); backdrop-filter: blur(4px);
     }
     .quick-pick:hover { background: rgba(201,168,76,0.15); color: var(--gold-lt); border-color: rgba(201,168,76,0.5); }
 
@@ -218,10 +219,10 @@
     /* ── Favorites ──────────────────────────────────────────── */
     #favorites-section { position: relative; z-index: 10; width: min(720px,92vw); margin: 40px auto 0; }
     #fav-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-    #fav-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; white-space: nowrap; }
+    #fav-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold-lt); text-transform: uppercase; white-space: nowrap; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
     .fav-line { flex: 1; height: 1px; background: linear-gradient(90deg,rgba(201,168,76,0.3),transparent); }
     #fav-list { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 10px; }
-    #fav-empty { font-size: 0.85rem; color: rgba(201,168,76,0.35); font-style: italic; text-align: center; padding: 20px; }
+    #fav-empty { font-size: 0.85rem; color: rgba(201,168,76,0.6); font-style: italic; text-align: center; padding: 20px; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
     .fav-chip {
       display: flex; align-items: center; justify-content: space-between;
       background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18);
@@ -722,11 +723,7 @@
       position:relative; z-index:10; width:min(660px,92vw); margin:10px auto 0;
       display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
     }
-    .status-chip {
-      background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.18);
-      border-radius:20px; padding:5px 14px;
-      font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.07em;
-      color:rgba(201,168,76,0.7); cursor:pointer; transition:all 0.2s; white-space:nowrap;
+    background: rgba(4,10,24,0.65); border: 1px solid rgba(201,168,76,0.4); border-radius: 20px; padding: 6px 16px; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.07em; color: rgba(232,201,106,0.95); cursor:pointer; transition:all 0.2s; white-space:nowrap; text-shadow:0 1px 4px rgba(0,0,0,0.8); backdrop-filter:blur(4px); cursor:pointer; transition:all 0.2s; white-space:nowrap;
     }
     .status-chip:hover { background:rgba(201,168,76,0.14); color:var(--gold-lt); }
     .status-chip.streak { color:#ff9040; border-color:rgba(255,144,64,0.3); background:rgba(255,144,64,0.07); }
