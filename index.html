@@ -661,18 +661,19 @@
     #nav-links {
       position:fixed; top:0; left:-290px; bottom:0; width:272px;
       z-index:206; display:flex !important; flex-direction:column;
-      background:linear-gradient(160deg,#0a1c38 0%,#06101f 100%);
-      border-right:1px solid rgba(201,168,76,0.2);
+      background:#06101f;
+      border-right:2px solid rgba(201,168,76,0.35);
       padding:0; gap:0; overflow-y:auto;
       transition:left 0.28s cubic-bezier(0.4,0,0.2,1);
-      box-shadow:4px 0 24px rgba(0,0,0,0.5);
+      box-shadow:6px 0 32px rgba(0,0,0,0.85);
+      isolation:isolate;
     }
     #nav-links.open { left:0; }
     /* Drawer header */
     #nav-drawer-header {
       display:none; align-items:center; justify-content:space-between;
-      padding:16px 16px 12px; border-bottom:1px solid rgba(201,168,76,0.15);
-      flex-shrink:0;
+      padding:16px 16px 14px; border-bottom:1px solid rgba(201,168,76,0.25);
+      flex-shrink:0; background:#06101f;
     }
     #nav-drawer-title {
       font-family:'Cinzel Decorative',serif; font-size:0.78rem;
@@ -686,12 +687,12 @@
     #nav-drawer-close:hover { color:var(--gold-lt); background:rgba(201,168,76,0.1); }
     /* Drawer items */
     #nav-links .nav-btn {
-      width:100%; text-align:left; font-size:0.78rem; padding:14px 20px;
-      border-radius:0; border:none; border-bottom:1px solid rgba(201,168,76,0.07);
-      letter-spacing:0.08em;
+      width:100%; text-align:left; font-size:0.8rem; padding:15px 20px;
+      border-radius:0; border:none; border-bottom:1px solid rgba(201,168,76,0.12);
+      letter-spacing:0.06em; color:var(--parchment); background:#06101f;
     }
-    #nav-links .nav-btn:hover { background:rgba(201,168,76,0.08); }
-    #nav-links .nav-btn.accent { background:rgba(201,168,76,0.1); border-bottom-color:rgba(201,168,76,0.15); }
+    #nav-links .nav-btn:hover { background:rgba(201,168,76,0.1); color:var(--gold-lt); }
+    #nav-links .nav-btn.accent { background:rgba(201,168,76,0.08); color:var(--gold-lt); border-bottom-color:rgba(201,168,76,0.2); }
     #nav-links .nav-label { display:inline !important; }
     #nav-links .nav-btn-icon { font-size:1rem; margin-right:10px; }
     @media(max-width:700px){
