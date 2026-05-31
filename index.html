@@ -83,6 +83,9 @@
       display: flex; align-items: center; justify-content: center;
       gap: 6px; padding: 0 16px;
     }
+    @media(max-width:700px){
+      #nav-bar { justify-content: flex-end; padding: 0 12px; }
+    }
     .nav-btn {
       font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.1em;
       text-transform: uppercase; padding: 8px 16px; border-radius: 2px; cursor: pointer;
@@ -851,7 +854,7 @@
   <div id="nav-backdrop" onclick="closeHamburger()"></div>
   <div id="nav-links" role="navigation" aria-label="Main navigation">
     <div id="nav-drawer-header">
-      <span id="nav-drawer-title">✝ Be Still and Know</span>
+      <span id="nav-drawer-title" style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(201,168,76,0.5);text-transform:uppercase;">Navigation</span>
       <button id="nav-drawer-close" onclick="closeHamburger()" aria-label="Close menu">✕</button>
     </div>
     <button class="nav-btn accent" onclick="openModal('reader-modal');closeHamburger()">
