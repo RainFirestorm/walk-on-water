@@ -1,4 +1,4 @@
-const CACHE = 'bsak-v1';
+const CACHE = 'bsak-v2';
 const ASSETS = ['./index.html', './wallpaper.jpg', './manifest.json'];
 
 self.addEventListener('install', e => {

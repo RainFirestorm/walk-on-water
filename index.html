@@ -646,71 +646,65 @@
     #person-modal-loading {
       font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em;
       color: rgba(201,168,76,0.45); text-align: center; padding: 12px;
-    }/* ── Mobile side drawer navigation ─────────────────────── */
+    }/* ── Navigation ─────────────────────────────────────── */
+    /* Desktop inline nav */
+    #nav-links-desktop { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+    /* Hamburger — hidden on desktop */
     #hamburger {
       display:none; background:none; border:1px solid rgba(201,168,76,0.3);
-      border-radius:3px; padding:6px 12px; cursor:pointer; color:var(--gold);
-      font-size:1.2rem; z-index:210; position:relative; line-height:1; flex-shrink:0;
-      transition: all 0.2s;
+      border-radius:3px; padding:7px 13px; cursor:pointer; color:var(--gold);
+      font-size:1.2rem; z-index:210; flex-shrink:0; line-height:1;
+      transition:background 0.2s;
     }
     #hamburger:hover { background:rgba(201,168,76,0.1); }
     /* Backdrop */
     #nav-backdrop {
-      display:none; position:fixed; inset:0; z-index:205;
-      background:rgba(0,0,0,0.55); backdrop-filter:blur(2px);
+      display:none; position:fixed; inset:0; z-index:299;
+      background:rgba(0,0,0,0.6);
     }
     #nav-backdrop.open { display:block; }
-    /* Side drawer */
+    /* Side drawer — always in DOM, slides in from left */
     #nav-links {
-      position:fixed; top:0; left:-290px; bottom:0; width:272px;
-      z-index:206; display:flex !important; flex-direction:column;
-      background:#06101f;
+      position:fixed; top:0; left:-300px; bottom:0; width:280px;
+      z-index:300;
+      background:#06101f !important;
       border-right:2px solid rgba(201,168,76,0.35);
-      padding:0; gap:0; overflow-y:auto;
-      transition:left 0.28s cubic-bezier(0.4,0,0.2,1);
-      box-shadow:6px 0 32px rgba(0,0,0,0.85);
-      isolation:isolate;
+      display:flex; flex-direction:column;
+      padding:0; overflow-y:auto;
+      transition:left 0.3s cubic-bezier(0.4,0,0.2,1);
+      box-shadow:8px 0 40px rgba(0,0,0,0.9);
     }
     #nav-links.open { left:0; }
-    /* Drawer header */
     #nav-drawer-header {
-      display:none; align-items:center; justify-content:space-between;
-      padding:16px 16px 14px; border-bottom:1px solid rgba(201,168,76,0.25);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:18px 18px 14px; border-bottom:1px solid rgba(201,168,76,0.2);
       flex-shrink:0; background:#06101f;
     }
-    #nav-drawer-title {
-      font-family:'Cinzel Decorative',serif; font-size:0.78rem;
-      letter-spacing:0.08em; color:var(--gold-lt);
-    }
     #nav-drawer-close {
-      background:none; border:none; color:rgba(201,168,76,0.5);
-      font-size:1.2rem; cursor:pointer; padding:4px 8px; border-radius:2px;
-      transition:all 0.2s; line-height:1;
+      background:none; border:1px solid rgba(201,168,76,0.2); border-radius:3px;
+      color:rgba(201,168,76,0.6); font-size:1rem; cursor:pointer;
+      padding:4px 10px; transition:all 0.2s; line-height:1;
     }
-    #nav-drawer-close:hover { color:var(--gold-lt); background:rgba(201,168,76,0.1); }
-    /* Drawer items */
+    #nav-drawer-close:hover { background:rgba(201,168,76,0.12); color:var(--gold-lt); }
     #nav-links .nav-btn {
-      width:100%; text-align:left; font-size:0.8rem; padding:15px 20px;
-      border-radius:0; border:none; border-bottom:1px solid rgba(201,168,76,0.12);
-      letter-spacing:0.06em; color:var(--parchment); background:#06101f;
+      background:#06101f !important; color:var(--parchment) !important;
+      width:100%; text-align:left; font-size:0.82rem; font-weight:400;
+      padding:16px 20px; border:none; border-radius:0;
+      border-bottom:1px solid rgba(201,168,76,0.1);
+      letter-spacing:0.06em; cursor:pointer; transition:background 0.18s;
     }
-    #nav-links .nav-btn:hover { background:rgba(201,168,76,0.1); color:var(--gold-lt); }
-    #nav-links .nav-btn.accent { background:rgba(201,168,76,0.08); color:var(--gold-lt); border-bottom-color:rgba(201,168,76,0.2); }
-    #nav-links .nav-label { display:inline !important; }
-    #nav-links .nav-btn-icon { font-size:1rem; margin-right:10px; }
+    #nav-links .nav-btn:hover { background:rgba(201,168,76,0.1) !important; color:var(--gold-lt) !important; }
+    #nav-links .nav-btn.accent { border-left:3px solid var(--gold); color:var(--gold-lt) !important; }
+    #nav-links .nav-btn-icon { margin-right:10px; font-size:1rem; }
     @media(max-width:700px){
       #hamburger { display:flex; align-items:center; }
-      #nav-drawer-header { display:flex; }
-      /* Hide inline nav links on mobile — drawer only */
+      #nav-links-desktop { display:none; }
+      #nav-bar { justify-content:flex-end; padding:0 12px; }
     }
     @media(min-width:701px){
+      #nav-links { display:none !important; }
       #nav-backdrop { display:none !important; }
-      #nav-links { position:static; flex-direction:row !important; background:transparent; border:none; box-shadow:none; width:auto; transition:none; padding:0; overflow:visible; }
-      #nav-drawer-header { display:none !important; }
-      #nav-links .nav-btn { width:auto; border:1px solid rgba(201,168,76,0.25); border-radius:2px; padding:8px 16px; font-size:0.68rem; }
-      .nav-label { display:inline !important; }
     }
-
     /* ── Verse of the Day ───────────────────────────────────── */
     #votd-card {
       position:relative; z-index:10; width:min(660px,92vw); margin:22px auto 0;
@@ -851,36 +845,33 @@
 <!-- ═══ NAV BAR ══════════════════════════════════════════════ -->
 <div id="nav-bar">
   <button id="hamburger" onclick="toggleHamburger()" aria-label="Open menu">☰</button>
-  <div id="nav-backdrop" onclick="closeHamburger()"></div>
-  <div id="nav-links" role="navigation" aria-label="Main navigation">
-    <div id="nav-drawer-header">
-      <span id="nav-drawer-title" style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(201,168,76,0.5);text-transform:uppercase;">Navigation</span>
-      <button id="nav-drawer-close" onclick="closeHamburger()" aria-label="Close menu">✕</button>
-    </div>
-    <button class="nav-btn accent" onclick="openModal('reader-modal');closeHamburger()">
-      <span class="nav-btn-icon">📜</span><span class="nav-label">Read Bible</span>
-    </button>
-    <button class="nav-btn" onclick="openModal('tracker-modal');closeHamburger()">
-      <span class="nav-btn-icon">📖</span><span class="nav-label">30-Day Plan</span>
-    </button>
-    <button class="nav-btn" onclick="openModal('bibtl-modal');closeHamburger()">
-      <span class="nav-btn-icon">🕊</span><span class="nav-label">Timeline</span>
-    </button>
-    <button class="nav-btn" onclick="openModal('tree-modal');closeHamburger()">
-      <span class="nav-btn-icon">🌿</span><span class="nav-label">Family Tree</span>
-    </button>
-    <button class="nav-btn" onclick="openModal('wordsearch-modal');closeHamburger()">
-      <span class="nav-btn-icon">🔍</span><span class="nav-label">Word Search</span>
-    </button>
-    <button class="nav-btn" onclick="openModal('notes-modal');closeHamburger()" style="border-color:rgba(100,200,180,0.3);color:#7ed4c8;">
-      <span class="nav-btn-icon">📝</span><span class="nav-label">Notes</span>
-    </button>
-    <button class="nav-btn" onclick="openModal('prayer-modal');closeHamburger()" style="border-color:rgba(180,130,220,0.3);color:#c890e8;">
-      <span class="nav-btn-icon">🙏</span><span class="nav-label">Prayer</span>
-    </button>
-  
+  <!-- Desktop nav links (hidden on mobile) -->
+  <div id="nav-links-desktop">
+    <button class="nav-btn accent" onclick="openModal('reader-modal')"><span class="nav-btn-icon">📜</span><span class="nav-label">Read Bible</span></button>
+    <button class="nav-btn" onclick="openModal('tracker-modal')"><span class="nav-btn-icon">📖</span><span class="nav-label">30-Day Plan</span></button>
+    <button class="nav-btn" onclick="openModal('bibtl-modal')"><span class="nav-btn-icon">🕊</span><span class="nav-label">Timeline</span></button>
+    <button class="nav-btn" onclick="openModal('tree-modal')"><span class="nav-btn-icon">🌿</span><span class="nav-label">Family Tree</span></button>
+    <button class="nav-btn" onclick="openModal('wordsearch-modal')"><span class="nav-btn-icon">🔍</span><span class="nav-label">Word Search</span></button>
+    <button class="nav-btn" onclick="openModal('notes-modal')" style="border-color:rgba(100,200,180,0.3);color:#7ed4c8;"><span class="nav-btn-icon">📝</span><span class="nav-label">Notes</span></button>
+    <button class="nav-btn" onclick="openModal('prayer-modal')" style="border-color:rgba(180,130,220,0.3);color:#c890e8;"><span class="nav-btn-icon">🙏</span><span class="nav-label">Prayer</span></button>
   </div>
 </div>
+
+<!-- Side drawer — OUTSIDE nav-bar (avoids backdrop-filter stacking context) -->
+<div id="nav-backdrop" onclick="closeHamburger()"></div>
+<nav id="nav-links" aria-label="Main navigation">
+  <div id="nav-drawer-header">
+    <span style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.15em;color:rgba(201,168,76,0.6);text-transform:uppercase;">✝ Menu</span>
+    <button id="nav-drawer-close" onclick="closeHamburger()" aria-label="Close menu">✕</button>
+  </div>
+  <button class="nav-btn accent" onclick="openModal('reader-modal');closeHamburger()"><span class="nav-btn-icon">📜</span> Read Bible</button>
+  <button class="nav-btn" onclick="openModal('tracker-modal');closeHamburger()"><span class="nav-btn-icon">📖</span> 30-Day Plan</button>
+  <button class="nav-btn" onclick="openModal('bibtl-modal');closeHamburger()"><span class="nav-btn-icon">🕊</span> Timeline</button>
+  <button class="nav-btn" onclick="openModal('tree-modal');closeHamburger()"><span class="nav-btn-icon">🌿</span> Family Tree</button>
+  <button class="nav-btn" onclick="openModal('wordsearch-modal');closeHamburger()"><span class="nav-btn-icon">🔍</span> Word Search</button>
+  <button class="nav-btn" onclick="openModal('notes-modal');closeHamburger()" style="color:#7ed4c8;"><span class="nav-btn-icon">📝</span> Notes</button>
+  <button class="nav-btn" onclick="openModal('prayer-modal');closeHamburger()" style="color:#c890e8;"><span class="nav-btn-icon">🙏</span> Prayer</button>
+</nav>
 
 <!-- ═══ SCENE ════════════════════════════════════════════════ -->
 <div id="scene">
